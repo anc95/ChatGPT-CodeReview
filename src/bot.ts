@@ -4,7 +4,7 @@ import { Chat } from "./chat.js";
 export const robot = (app: Probot) => {
   const chat = new Chat()
 
-  app.on("pull_request.synchronize", async (context) => {
+  const handleReview = async (context: any) => {
     const repo = context.repo()
 
     const { data: diff } = await context.octokit.pulls.get({
@@ -21,5 +21,9 @@ export const robot = (app: Probot) => {
     });
 
     await context.octokit.issues.createComment(issueComment);
-  });
+  }
+
+  app.on("pull_request.synchronize", handleReview);
+
+  app.on("pull_request.opened", handleReview)
 };
