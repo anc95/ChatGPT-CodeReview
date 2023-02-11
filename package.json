@@ -18,6 +18,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@vercel/edge": "^0.2.7",
     "chatgpt": "^4.2.0",
     "dotenv": "^16.0.3",
     "probot": "^12.2.4"

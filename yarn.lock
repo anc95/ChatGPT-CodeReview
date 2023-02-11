@@ -1135,6 +1135,11 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@vercel/edge@^0.2.7":
+  version "0.2.7"
+  resolved "https://registry.npmjs.org/@vercel/edge/-/edge-0.2.7.tgz#fc7766af44128b5e624565dce9e14443b5869d83"
+  integrity sha512-pyHPopdvBXcgU8cabwtGCBxmNeU4YDqRTZFqJJYN5UTcTqaI7jc1HtaCPaf4nbapDtLOcqGQWAil6Hz2OMMeiw==
+
 abort-controller@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/abort-controller/-/abort-controller-3.0.0.tgz#eaf54d53b62bae4138e809ca225c8439a6efb392"
