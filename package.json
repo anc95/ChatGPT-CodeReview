@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "start": "probot run ./lib/index.js",
+    "start": "node -r dotenv/config ./lib/index.js",
     "test": "jest"
   },
   "dependencies": {
