@@ -5,13 +5,10 @@ const chatAPI = new ChatGPTAPI({
 })
 
 export class Chat {
-  private generatePrompt = (title: string, patch: string) => {
-    return `  Act as a code reviewer of a Pull Request, providing feedback on the code changes below.
-    You are provided with the Pull Request changes in a patch format.
-    Each patch entry has file name in the Subject line followed by the code changes (diffs) in a unidiff format.
-    \n\n
-    The Pull Request title is ${title}
-    Patch of the Pull Request to review:
+  private generatePrompt = (title: string, patch: string, extra?: string) => {
+    return `
+    The Pull Request title is ${title}, please do a code review for bellow code diff,
+    and suggest a more approriate pull request title, $${extra ? 'biside, ' + extra + '.': ''} please be brief, Thanks.
     \n
     ${patch}
     \n\n
@@ -20,15 +17,17 @@ export class Chat {
     - Review the code changes (diffs) in the patch and provide feedback.
     - If there are any bugs, highlight them.
     - If the Pull request title is not good, please provide a better one.
+
+    Thank you in advance for your JOB
     `
   }
 
-  public codeReview = async (title: string, patch: string) => {
+  public codeReview = async (title: string, patch: string, extra?: string) => {
     if (!patch) {
       return '';
     }
 
-    const res = await chatAPI.sendMessage(this.generatePrompt(title, patch))
+    const res = await chatAPI.sendMessage(this.generatePrompt(title, patch, extra))
 
     return res.text
   }
