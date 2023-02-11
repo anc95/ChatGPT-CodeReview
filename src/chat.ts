@@ -8,9 +8,8 @@ export class Chat {
   private generatePrompt = (title: string, patch: string, extra?: string) => {
     return `
     The Pull Request title is ${title}, Your Tasks is:
-    - do the code review
+    - Do the code review
     ${extra ? '-' + extra: ''}
-    Please be brief, Thanks.
     \n
     ${patch}
     \n\n
