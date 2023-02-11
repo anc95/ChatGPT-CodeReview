@@ -7,8 +7,10 @@ const chatAPI = new ChatGPTAPI({
 export class Chat {
   private generatePrompt = (title: string, patch: string, extra?: string) => {
     return `
-    The Pull Request title is ${title}, please do a code review for bellow code diff,
-    and suggest a more approriate pull request title, $${extra ? 'biside, ' + extra + '.': ''} please be brief, Thanks.
+    The Pull Request title is ${title}, Your Tasks is:
+    - do the code review
+    ${extra ? '-' + extra: ''}
+    Please be brief, Thanks.
     \n
     ${patch}
     \n\n
