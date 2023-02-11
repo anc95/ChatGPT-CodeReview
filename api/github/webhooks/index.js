@@ -1,6 +1,6 @@
 import { createNodeMiddleware, createProbot } from "probot";
 
-import app from "../../../app"
+import { robot as app } from "../../../lib/bot.js"
 
 probot = createProbot();
 
