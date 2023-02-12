@@ -1,7 +1,3 @@
-import { geolocation } from '@vercel/edge';
-
-const BLOCKED_COUNTRY = 'US';
-
 export const config = {
   matcher: '/',
 };
