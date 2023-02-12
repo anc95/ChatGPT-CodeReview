@@ -69,6 +69,6 @@
     "pretty": false,
     "skipLibCheck": true
   },
-  "include": ["src/", "*.ts"],
+  "include": ["src/", "*.ts", "middleware.js", "middleware.js"],
   "compileOnSave": false
 }
