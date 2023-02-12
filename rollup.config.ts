@@ -3,7 +3,7 @@ import { defineConfig } from 'rollup'
 
 export default defineConfig([
   {
-    input: 'middleware.ts',
+    input: 'middleware.js',
     output: {
       file: 'dist/middleware.js',
       format: 'esm',
