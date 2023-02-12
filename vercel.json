@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "api/github/webhooks/index.js": {
-      "includeFiles": "node_modules/**"
-    }
-  }
-}
