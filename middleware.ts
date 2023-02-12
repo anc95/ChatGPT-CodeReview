@@ -1,8 +1,10 @@
+import { NextResponse } from 'next/server'
+
 export const config = {
   matcher: '/api/github/webhooks',
 };
 
-export default async function middleware(request) {
+export default async function middleware(request: any) {
   const json = await request.json();
 
   if (!json) {
@@ -17,5 +19,5 @@ export default async function middleware(request) {
     return NextResponse.next();
   }
 
-  return Response.redirect('https://github.com/apps/cr-gpt');
+  return NextResponse.redirect('https://github.com/apps/cr-gpt');
 }
