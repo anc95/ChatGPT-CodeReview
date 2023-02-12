@@ -1,5 +1,3 @@
-import { NextRequest } from "next/server";
-
 export const config = {
   matcher: '/api/github/webhooks',
 };
