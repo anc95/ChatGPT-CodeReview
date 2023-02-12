@@ -2,7 +2,6 @@ import esbuild from 'rollup-plugin-esbuild';
 import { defineConfig } from 'rollup'
 import commonjs from '@rollup/plugin-commonjs'
 import nodeResolve from '@rollup/plugin-node-resolve'
-import json from '@rollup/plugin-json'
 
 export default defineConfig([
   {
@@ -21,14 +20,12 @@ export default defineConfig([
   {
     input: 'src/bot.ts',
     output: {
-      file: 'dist/lib/bot.js',
+      dir: 'dist/lib/',
       format: 'esm',
-      inlineDynamicImports: true,
+      inlineDynamicImports: false,
     },
     plugins: [
-      commonjs(), 
-      esbuild(), 
-      nodeResolve()
+      esbuild({include: 'src/*.ts'})
     ]
   },
   {
@@ -38,10 +35,7 @@ export default defineConfig([
       format: 'esm',
     },
     plugins: [
-      commonjs(), 
-      esbuild(), 
-      nodeResolve(),
-      json()
+      esbuild(),
     ]
   }
 ])
