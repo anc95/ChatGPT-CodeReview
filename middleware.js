@@ -3,6 +3,13 @@ export const config = {
 };
 
 export default async function middleware(request) {
-  console.log(JSON.stringify(await request.json()))
-  return Response.redirect('https://github.com/apps/chatgpt-codereview-bot');
+  const json = await request.json();
+
+  console.log(json.issue)
+
+  if (!json.issue) {
+    return Response.redirect('https://github.com/apps/chatgpt-codereview-bot');
+  }
+
+  return Response.redirect('https://github.com/apps/chatgpt-codereview-bot1');
 }
