@@ -9,7 +9,7 @@ export default async function middleware(request) {
     return;
   }
 
-  if (json.action === "opened" && json.action.pull_request && json.action.pull_request.state === 'open') {
+  if (json.action === "opened" && json.pull_request && json.pull_request.state === 'open') {
     return;
   }
 
