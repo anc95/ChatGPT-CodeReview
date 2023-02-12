@@ -19,11 +19,15 @@ export const robot = (app: Probot) => {
   }
 
   app.on("pull_request.opened", async context => {
-    const issueComment = context.issue({
-      body: await chat.codeReview(context.payload.pull_request.title, await getDiff(context, context.payload.pull_request.number)),
-    });
+    async function cr() {
+      const issueComment = context.issue({
+        body: await chat.codeReview(context.payload.pull_request.title, await getDiff(context, context.payload.pull_request.number)),
+      });
+  
+      await context.octokit.issues.createComment(issueComment);
+    }
 
-    await context.octokit.issues.createComment(issueComment);
+    cr()
   })
 
   app.on("issue_comment.created", async context => {
@@ -35,12 +39,15 @@ export const robot = (app: Probot) => {
       return
     }
 
-    const extraContent = context.payload.comment.body.substring(3)
-    const diff = await getDiff(context, context.payload.issue.number)
-    const issueComment = context.issue({
-      body: await chat.codeReview(context.payload.issue.title, diff, extraContent),
-    });
+    async function cr() {
+      const diff = await getDiff(context, context.payload.issue.number)
+      const issueComment = context.issue({
+        body: await chat.codeReview(context.payload.issue.title, diff),
+      });
 
-    await context.octokit.issues.createComment(issueComment);
+      await context.octokit.issues.createComment(issueComment);
+    }
+
+    cr()
   })
 };
