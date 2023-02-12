@@ -5,11 +5,17 @@ export const config = {
 export default async function middleware(request) {
   const json = await request.json();
 
-  console.log(json.issue)
-
-  if (!json.issue) {
-    return Response.redirect('https://github.com/apps/chatgpt-codereview-bot');
+  if (!json) {
+    return;
   }
 
-  return Response.redirect('https://github.com/apps/chatgpt-codereview-bot1');
+  if (json.action === "opened" && json.action.pull_request && json.action.pull_request.state === 'open') {
+    return;
+  }
+
+  if (json.action === 'created' && json.sender && json.sender.type === 'User' && json.comment && json.comment.body && json.comment.body.startsWith('@CR')) {
+    return
+  }
+
+  return Response.redirect('https://github.com/apps/cr-gpt');
 }
