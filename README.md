@@ -2,7 +2,7 @@
 
 > A GitHub App built with [Probot](https://github.com/probot/probot) that A Probot app
 
-Install: https://github.com/apps/cr-bot
+Install: https://github.com/apps/cr-bot;
 
 ## Setup
 
