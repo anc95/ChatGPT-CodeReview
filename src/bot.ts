@@ -1,6 +1,8 @@
 import { Context, Probot } from 'probot';
 import { Chat } from './chat.js';
 
+const OPENAI_API_KEY = 'OPENAI_API_KEY';
+
 export const robot = (app: Probot) => {
   // const getDiff = async (context: Context, pullRequestNumber: number) => {
   //   const repo = context.repo();
@@ -26,15 +28,21 @@ export const robot = (app: Probot) => {
   // };
 
   const loadChat = async (context: Context) => {
-    const config = (await context.config('cr-gpt.yml')) as {
-      OPENAI_API_KEY: string;
-    };
+    const repo = context.repo();
+    const { data } = (await context.octokit.request(
+      'GET /repos/{owner}/{repo}/actions/variables/{name}',
+      {
+        owner: repo.owner,
+        repo: repo.repo,
+        name: OPENAI_API_KEY,
+      }
+    )) as any;
 
-    if (!config?.OPENAI_API_KEY) {
+    if (!data?.value) {
       return null;
     }
 
-    return new Chat(config.OPENAI_API_KEY);
+    return new Chat(data.value);
   };
 
   app.on('pull_request.opened', async (context) => {
