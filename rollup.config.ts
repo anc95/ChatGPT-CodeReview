@@ -1,17 +1,15 @@
 import esbuild from 'rollup-plugin-esbuild';
-import { defineConfig } from 'rollup'
+import { defineConfig } from 'rollup';
 
 export default defineConfig([
   {
-    input: 'middleware.js',
+    input: 'middleware.ts',
     output: {
       file: 'dist/middleware.js',
       format: 'esm',
       inlineDynamicImports: true,
     },
-    plugins: [
-      esbuild()
-    ]
+    plugins: [esbuild()],
   },
   {
     input: 'src/bot.ts',
@@ -20,18 +18,14 @@ export default defineConfig([
       format: 'esm',
       inlineDynamicImports: false,
     },
-    plugins: [
-      esbuild({include: 'src/*.ts'})
-    ]
+    plugins: [esbuild({ include: 'src/*.ts' })],
   },
   {
-    input: ["api/github/webhooks/index.ts"],
+    input: ['api/github/webhooks/index.ts'],
     output: {
-      dir: "dist/api/github/webhooks",
+      dir: 'dist/api/github/webhooks',
       format: 'esm',
     },
-    plugins: [
-      esbuild(),
-    ]
-  }
-])
+    plugins: [esbuild()],
+  },
+]);
