@@ -5,7 +5,7 @@ export const config = {
 };
 
 export async function middleware(request: any) {
-  const json = await request;
+  const json = await request.json();
 
   if (!json) {
     console.log('received is not a json');
