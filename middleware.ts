@@ -8,7 +8,8 @@ export async function middleware(request: any) {
   const json = await request;
 
   if (!json) {
-    return next();
+    console.log('received is not a json');
+    return Response.redirect('https://github.com/apps/cr-gpt');
   }
 
   if (
@@ -16,6 +17,7 @@ export async function middleware(request: any) {
     json.pull_request &&
     json.pull_request.state === 'open'
   ) {
+    console.log('received an open pull_request');
     return next();
   }
 
@@ -27,6 +29,7 @@ export async function middleware(request: any) {
     json.comment.body &&
     json.comment.body.startsWith('/cr.gpt')
   ) {
+    console.log('received a comment');
     return next();
   }
 

@@ -6,6 +6,8 @@ export const robot = (app: Probot) => {
   const getDiff = async (context: Context, pullRequestNumber: number) => {
     const repo = context.repo();
 
+    console.log('start get diff for: ', JSON.stringify(repo));
+
     const { data: diff } = await context.octokit.pulls.get({
       owner: repo.owner,
       repo: repo.repo,
@@ -14,6 +16,8 @@ export const robot = (app: Probot) => {
         format: 'diff',
       },
     });
+
+    console.log('get diff done for: ', JSON.stringify(repo));
 
     return diff as unknown as string;
   };
@@ -30,7 +34,11 @@ export const robot = (app: Probot) => {
       await context.octokit.issues.createComment(issueComment);
     }
 
-    cr();
+    try {
+      cr();
+    } catch (e) {
+      console.error(e);
+    }
   });
 
   app.on('issue_comment.created', async (context) => {
@@ -51,6 +59,10 @@ export const robot = (app: Probot) => {
       await context.octokit.issues.createComment(issueComment);
     }
 
-    cr();
+    try {
+      cr();
+    } catch (e) {
+      console.error(e);
+    }
   });
 };
