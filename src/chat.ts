@@ -1,10 +1,13 @@
 import { ChatGPTAPI } from 'chatgpt';
-
-const chatAPI = new ChatGPTAPI({
-  apiKey: process.env.OPENAI_API_KEY as string,
-});
-
 export class Chat {
+  private chatAPI: ChatGPTAPI;
+
+  constructor(apikey: string) {
+    this.chatAPI = new ChatGPTAPI({
+      apiKey: apikey,
+    });
+  }
+
   private generatePrompt = (_: string, patch: string) => {
     return `
     Act as a code reviewer of a Pull Request, providing feedback on the code changes below.
@@ -33,7 +36,9 @@ export class Chat {
     console.time('code-review cost');
     console.log('start query chatGPT');
 
-    const res = await chatAPI.sendMessage(this.generatePrompt(title, patch));
+    const res = await this.chatAPI.sendMessage(
+      this.generatePrompt(title, patch)
+    );
 
     console.log('end query chatGPT');
     console.timeEnd('code-review cost');
