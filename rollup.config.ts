@@ -8,7 +8,7 @@ export default defineConfig([
     input: 'middleware.ts',
     output: {
       file: 'dist/middleware.js',
-      format: 'cjs',
+      format: 'esm',
       inlineDynamicImports: true,
     },
     plugins: [esbuild()],
