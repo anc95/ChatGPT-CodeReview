@@ -10,7 +10,7 @@ const packageJSON = `{
   }
 }`;
 
-const middlewareJs = '../dist/middleware.js';
+const middlewareJs = './dist/middleware.js';
 
 writeFileSync(
   middlewareJs,
