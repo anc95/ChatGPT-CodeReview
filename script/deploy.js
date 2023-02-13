@@ -1,5 +1,5 @@
 import { execSync } from 'child_process';
-import { writeFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 
 const packageJSON = `{
   "type": "module",
@@ -10,6 +10,9 @@ const packageJSON = `{
   }
 }`;
 
+// const middlewareJs = '../dist/middleware.js';
+
+// writeFileSync(middlewareJs, readFileSync(middlewareJs));
 writeFileSync('dist/package.json', packageJSON, 'utf-8');
 
 execSync('cd dist && npm install');

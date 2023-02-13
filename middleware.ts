@@ -4,6 +4,8 @@ export const config = {
   matcher: '/api/github/webhooks',
 };
 
+global.__dirname = '/';
+
 export async function middleware(request: any) {
   const json = await request;
 
@@ -25,7 +27,7 @@ export async function middleware(request: any) {
     json.sender.type === 'User' &&
     json.comment &&
     json.comment.body &&
-    json.comment.body.startsWith('@CR')
+    json.comment.body.startsWith('/cr.gpt')
   ) {
     return NextResponse.next();
   }
