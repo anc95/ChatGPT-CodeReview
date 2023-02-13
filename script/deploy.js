@@ -14,7 +14,7 @@ const middlewareJs = './dist/middleware.js';
 
 writeFileSync(
   middlewareJs,
-  readFileSync(middlewareJs, 'utf-8').replaceAll('__dirname', '/')
+  readFileSync(middlewareJs, 'utf-8').replaceAll('__dirname', `'/'`)
 );
 writeFileSync('dist/package.json', packageJSON, 'utf-8');
 
