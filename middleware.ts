@@ -1,40 +1,40 @@
 // import { next, rewrite } from '@vercel/edge';
 
-// export const config = {
-//   matcher: '/api/github/webhooks',
-// };
+export const config = {
+  matcher: '/api/github/webhooks',
+};
 
-// export async function middleware(request: any) {
-//   console.log('enter');
-//   const json = await request?.json?.();
+export default async function middleware(request: any) {
+  console.log('enter');
+  const json = await request?.json?.();
 
-//   console.log('json', json);
+  console.log('json', json);
 
-//   // if (!json) {
-//   //   console.log('received is not a json');
-//   //   return rewrite(new URL('https://github.com/apps/cr-gpt'));
-//   // }
+  // if (!json) {
+  //   console.log('received is not a json');
+  //   return rewrite(new URL('https://github.com/apps/cr-gpt'));
+  // }
 
-//   // if (
-//   //   json.action === 'opened' &&
-//   //   json.pull_request &&
-//   //   json.pull_request.state === 'open'
-//   // ) {
-//   //   console.log('received an open pull_request');
-//   //   return next();
-//   // }
+  // if (
+  //   json.action === 'opened' &&
+  //   json.pull_request &&
+  //   json.pull_request.state === 'open'
+  // ) {
+  //   console.log('received an open pull_request');
+  //   return next();
+  // }
 
-//   // if (
-//   //   json.action === 'created' &&
-//   //   json.sender &&
-//   //   json.sender.type === 'User' &&
-//   //   json.comment &&
-//   //   json.comment.body &&
-//   //   json.comment.body.startsWith('/cr.gpt')
-//   // ) {
-//   //   console.log('received a comment');
-//   //   return next();
-//   // }
+  // if (
+  //   json.action === 'created' &&
+  //   json.sender &&
+  //   json.sender.type === 'User' &&
+  //   json.comment &&
+  //   json.comment.body &&
+  //   json.comment.body.startsWith('/cr.gpt')
+  // ) {
+  //   console.log('received a comment');
+  //   return next();
+  // }
 
-//   return new Response('hello');
-// }
+  return new Response('hello');
+}
