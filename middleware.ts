@@ -4,8 +4,8 @@ export const config = {
   matcher: '/api/github/webhooks',
 };
 
-export default async function middleware(request) {
-  const json = await request.json();
+export default async function middleware(request: any) {
+  const json = await request;
 
   if (!json) {
     return NextResponse.next();
