@@ -5,7 +5,7 @@ const chatAPI = new ChatGPTAPI({
 });
 
 export class Chat {
-  private generatePrompt = (title: string, patch: string) => {
+  private generatePrompt = (_: string, patch: string) => {
     return `
     Act as a code reviewer of a Pull Request, providing feedback on the code changes below.
     You are provided with a github pull request diff url.
