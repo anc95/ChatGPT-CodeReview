@@ -11,7 +11,7 @@ export default defineConfig([
       format: 'cjs',
       inlineDynamicImports: true,
     },
-    plugins: [esbuild(), commonjs(), nodeResolve()],
+    plugins: [esbuild()],
   },
   {
     input: 'src/bot.ts',
