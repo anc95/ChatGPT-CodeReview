@@ -26,7 +26,7 @@ export default defineConfig([
     input: ['api/github/webhooks/index.ts'],
     output: {
       dir: 'dist/api/github/webhooks',
-      format: 'esm',
+      format: 'cjs',
     },
     plugins: [esbuild()],
   },
