@@ -1,3 +1,4 @@
+globalThis.__dirname = '/';
 import { NextResponse } from 'next/server';
 
 export const config = {
