@@ -1,4 +1,4 @@
-import { Context, Probot } from 'probot';
+import { Probot } from 'probot';
 import { Chat } from './chat.js';
 
 export const robot = (app: Probot) => {
@@ -40,8 +40,10 @@ export const robot = (app: Probot) => {
 
     try {
       await cr();
+      return 'success';
     } catch (e) {
       console.error(e);
+      return e;
     }
   });
 
@@ -68,8 +70,10 @@ export const robot = (app: Probot) => {
 
     try {
       await cr();
+      return 'success';
     } catch (e) {
       console.error(e);
+      return e;
     }
   });
 };
