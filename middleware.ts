@@ -7,6 +7,13 @@ export const config = {
 export default async function middleware(request: any) {
   let json;
 
+  setTimeout(() => {
+    console.log(1000);
+  });
+  setTimeout(() => {
+    console.log(1000);
+  }, 10000);
+
   try {
     console.log('enter');
     json = await request?.json?.();
