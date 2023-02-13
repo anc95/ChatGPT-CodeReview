@@ -11,7 +11,7 @@ export default defineConfig([
       format: 'esm',
       inlineDynamicImports: true,
     },
-    plugins: [esbuild()],
+    plugins: [esbuild(), commonjs(), nodeResolve()],
   },
   {
     input: 'src/bot.ts',
