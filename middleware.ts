@@ -1,8 +1,8 @@
-import { next, rewrite } from '@vercel/edge';
+// import { next, rewrite } from '@vercel/edge';
 
-export const config = {
-  matcher: '/api/github/webhooks',
-};
+// export const config = {
+//   matcher: '/api/github/webhooks',
+// };
 
 export async function middleware(request: any) {
   console.log('enter');
