@@ -30,7 +30,7 @@ export const robot = (app: Probot) => {
       OPENAI_API_KEY: string;
     };
 
-    if (!config.OPENAI_API_KEY) {
+    if (!config?.OPENAI_API_KEY) {
       return null;
     }
 
