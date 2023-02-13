@@ -6,7 +6,7 @@ export default defineConfig([
     input: 'middleware.ts',
     output: {
       file: 'dist/middleware.js',
-      format: 'esm',
+      format: 'cjs',
       inlineDynamicImports: true,
     },
     plugins: [esbuild()],
