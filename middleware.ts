@@ -1,15 +1,15 @@
-import { next } from '@vercel/edge';
+import { next, rewrite } from '@vercel/edge';
 
 export const config = {
   matcher: '/api/github/webhooks',
 };
 
 export async function middleware(request: any) {
-  const json = await request.json();
+  const json = await request?.json?.();
 
   if (!json) {
     console.log('received is not a json');
-    return Response.redirect('https://github.com/apps/cr-gpt');
+    return rewrite(new URL('https://github.com/apps/cr-gpt'));
   }
 
   if (
@@ -33,5 +33,5 @@ export async function middleware(request: any) {
     return next();
   }
 
-  return Response.redirect('https://github.com/apps/cr-gpt');
+  return rewrite(new URL('https://github.com/apps/cr-gpt'));
 }
