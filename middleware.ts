@@ -1,8 +1,4 @@
-import { NextResponse } from 'next/server';
-
-globalThis.__dirname = '/';
-
-console.log(__dirname);
+import { next } from '@vercel/edge';
 
 export const config = {
   matcher: '/api/github/webhooks',
@@ -12,7 +8,7 @@ export async function middleware(request: any) {
   const json = await request;
 
   if (!json) {
-    return NextResponse.next();
+    return next();
   }
 
   if (
@@ -20,7 +16,7 @@ export async function middleware(request: any) {
     json.pull_request &&
     json.pull_request.state === 'open'
   ) {
-    return NextResponse.next();
+    return next();
   }
 
   if (
@@ -31,8 +27,8 @@ export async function middleware(request: any) {
     json.comment.body &&
     json.comment.body.startsWith('/cr.gpt')
   ) {
-    return NextResponse.next();
+    return next();
   }
 
-  return NextResponse.redirect('https://github.com/apps/cr-gpt');
+  return Response.redirect('https://github.com/apps/cr-gpt');
 }
