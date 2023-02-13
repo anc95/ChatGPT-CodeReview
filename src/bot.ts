@@ -1,8 +1,9 @@
-import { Probot } from 'probot';
+import { Context, Probot } from 'probot';
 import { Chat } from './chat.js';
 
+const OPENAI_API_KEY = 'OPENAI_API_KEY';
+
 export const robot = (app: Probot) => {
-  const chat = new Chat();
   // const getDiff = async (context: Context, pullRequestNumber: number) => {
   //   const repo = context.repo();
 
@@ -26,7 +27,31 @@ export const robot = (app: Probot) => {
   //   return diff as unknown as string;
   // };
 
+  const loadChat = async (context: Context) => {
+    const repo = context.repo();
+    const { data } = (await context.octokit.request(
+      'GET /repos/{owner}/{repo}/actions/variables/{name}',
+      {
+        owner: repo.owner,
+        repo: repo.repo,
+        name: OPENAI_API_KEY,
+      }
+    )) as any;
+
+    if (!data?.value) {
+      return null;
+    }
+
+    return new Chat(data.value);
+  };
+
   app.on('pull_request.opened', async (context) => {
+    const chat = await loadChat(context);
+
+    if (!chat) {
+      return 'no chat initialized';
+    }
+
     async function cr() {
       const issueComment = context.issue({
         body: await chat.codeReview(
@@ -54,6 +79,12 @@ export const robot = (app: Probot) => {
 
     if (!context.payload.comment.html_url.includes('/pull/')) {
       return;
+    }
+
+    const chat = await loadChat(context);
+
+    if (!chat) {
+      return 'no chat initialized';
     }
 
     async function cr() {
