@@ -3,31 +3,35 @@ import { Chat } from './chat.js';
 
 export const robot = (app: Probot) => {
   const chat = new Chat();
-  const getDiff = async (context: Context, pullRequestNumber: number) => {
-    const repo = context.repo();
+  // const getDiff = async (context: Context, pullRequestNumber: number) => {
+  //   const repo = context.repo();
 
-    console.log('start get diff for: ', JSON.stringify(repo));
+  //   console.log(
+  //     'start get diff for: ',
+  //     JSON.stringify(repo),
+  //     pullRequestNumber
+  //   );
 
-    const { data: diff } = await context.octokit.pulls.get({
-      owner: repo.owner,
-      repo: repo.repo,
-      pull_number: pullRequestNumber,
-      mediaType: {
-        format: 'diff',
-      },
-    });
+  //   const { data: diff } = await context.octokit.pulls.get({
+  //     owner: repo.owner,
+  //     repo: repo.repo,
+  //     pull_number: pullRequestNumber,
+  //     mediaType: {
+  //       format: 'diff',
+  //     },
+  //   });
 
-    console.log('get diff done for: ', JSON.stringify(repo));
+  //   console.log('get diff done for: ', JSON.stringify(repo));
 
-    return diff as unknown as string;
-  };
+  //   return diff as unknown as string;
+  // };
 
   app.on('pull_request.opened', async (context) => {
     async function cr() {
       const issueComment = context.issue({
         body: await chat.codeReview(
           context.payload.pull_request.title,
-          await getDiff(context, context.payload.pull_request.number)
+          context.payload.pull_request.diff_url
         ),
       });
 
@@ -51,9 +55,12 @@ export const robot = (app: Probot) => {
     }
 
     async function cr() {
-      const diff = await getDiff(context, context.payload.issue.number);
+      // const diff = await getDiff(context, context.payload.issue.number);
       const issueComment = context.issue({
-        body: await chat.codeReview(context.payload.issue.title, diff),
+        body: await chat.codeReview(
+          context.payload.issue.title,
+          context.payload.issue.pull_request?.diff_url as string
+        ),
       });
 
       await context.octokit.issues.createComment(issueComment);
