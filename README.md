@@ -2,7 +2,7 @@
 
 > A code review robot powered by ChatGPT
 
-## Ussage
+## Usage
 
 ### Install
 
