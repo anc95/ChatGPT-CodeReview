@@ -1,4 +1,4 @@
-import { Context, Probot } from 'probot';
+import { Probot } from 'probot';
 import { Chat } from './chat.js';
 
 export const robot = (app: Probot) => {
