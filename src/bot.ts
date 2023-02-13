@@ -35,7 +35,7 @@ export const robot = (app: Probot) => {
     }
 
     try {
-      cr();
+      await cr();
     } catch (e) {
       console.error(e);
     }
@@ -60,7 +60,7 @@ export const robot = (app: Probot) => {
     }
 
     try {
-      cr();
+      await cr();
     } catch (e) {
       console.error(e);
     }
