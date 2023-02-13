@@ -10,31 +10,31 @@ export async function middleware(request: any) {
 
   console.log('json', json);
 
-  if (!json) {
-    console.log('received is not a json');
-    return rewrite(new URL('https://github.com/apps/cr-gpt'));
-  }
+  // if (!json) {
+  //   console.log('received is not a json');
+  //   return rewrite(new URL('https://github.com/apps/cr-gpt'));
+  // }
 
-  if (
-    json.action === 'opened' &&
-    json.pull_request &&
-    json.pull_request.state === 'open'
-  ) {
-    console.log('received an open pull_request');
-    return next();
-  }
+  // if (
+  //   json.action === 'opened' &&
+  //   json.pull_request &&
+  //   json.pull_request.state === 'open'
+  // ) {
+  //   console.log('received an open pull_request');
+  //   return next();
+  // }
 
-  if (
-    json.action === 'created' &&
-    json.sender &&
-    json.sender.type === 'User' &&
-    json.comment &&
-    json.comment.body &&
-    json.comment.body.startsWith('/cr.gpt')
-  ) {
-    console.log('received a comment');
-    return next();
-  }
+  // if (
+  //   json.action === 'created' &&
+  //   json.sender &&
+  //   json.sender.type === 'User' &&
+  //   json.comment &&
+  //   json.comment.body &&
+  //   json.comment.body.startsWith('/cr.gpt')
+  // ) {
+  //   console.log('received a comment');
+  //   return next();
+  // }
 
-  return rewrite(new URL('https://github.com/apps/cr-gpt'));
+  return new Response('hello');
 }
