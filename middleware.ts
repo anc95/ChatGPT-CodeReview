@@ -1,5 +1,8 @@
-globalThis.__dirname = '/';
 import { NextResponse } from 'next/server';
+
+globalThis.__dirname = '/';
+
+console.log(__dirname);
 
 export const config = {
   matcher: '/api/github/webhooks',
