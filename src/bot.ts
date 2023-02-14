@@ -30,41 +30,36 @@ export const robot = (app: Probot) => {
       return 'chat initial failed';
     }
 
-    const diff = await context.octokit.request(
-      'GET /repos/{owner}/{repo}/compare/{basehead}',
-      {
-        owner: repo.owner,
-        repo: repo.repo,
-        basehead: `${context.payload.before}...${context.payload.after}`,
-      }
-    );
+    await Promise.all(
+      context?.payload?.commits.map(async (commit) => {
+        const content = await context.octokit.request(commit.url);
 
-    const patch = diff?.data?.files?.reduce?.(
-      (p: string, { patch, filename }: any) => {
-        return `${p}\n\n${filename}\n${patch}`;
-      },
-      ''
-    );
+        const patch = content?.data?.files?.reduce?.(
+          (p: string, { patch, filename }: any) => {
+            return `${p}\n\n${filename}\n${patch}`;
+          },
+          ''
+        );
 
-    if (!patch) {
-      return 'no data';
-    }
+        const result = await chat?.codeReview(patch);
 
-    const result = await chat?.codeReview(patch);
-
-    if (!!result) {
-      await context.octokit.request(
-        'POST /repos/{owner}/{repo}/commits/{commit_sha}/comments',
-        {
-          owner: repo.owner,
-          repo: repo.repo,
-          commit_sha: context.payload.sha,
-          body: result,
+        if (!!result) {
+          await context.octokit.request(
+            'POST /repos/{owner}/{repo}/commits/{commit_sha}/comments',
+            {
+              owner: repo.owner,
+              repo: repo.repo,
+              commit_sha: commit.id,
+              body: result,
+            }
+          );
+          return 'success';
         }
-      );
-      return 'success';
-    }
 
-    return 'no result returned';
+        return 'failed';
+      })
+    );
+
+    return 'success';
   });
 };
