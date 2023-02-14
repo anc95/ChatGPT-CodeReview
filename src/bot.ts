@@ -46,6 +46,9 @@ export const robot = (app: Probot) => {
         );
         try {
           const result = await chat?.codeReview(patch);
+
+          console.log(patch, result);
+
           if (!!result) {
             await context.octokit.request(
               'POST /repos/{owner}/{repo}/commits/{commit_sha}/comments',
