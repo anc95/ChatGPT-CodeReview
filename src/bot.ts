@@ -44,4 +44,35 @@ export const robot = (app: Probot) => {
 
     return new Chat(data.value);
   };
+
+  app.on('status', async (context) => {
+    context.id;
+  });
+
+  // app.on('pull_request.opened', async (context) => {
+  //   const chat = await loadChat(context);
+
+  //   if (!chat) {
+  //     return 'no chat initialized';
+  //   }
+
+  //   async function cr() {
+  //     const issueComment = context.issue({
+  //       body: await chat.codeReview(
+  //         context.payload.pull_request.title,
+  //         context.payload.pull_request.diff_url
+  //       ),
+  //     });
+
+  //     await context.octokit.issues.createComment(issueComment);
+  //   }
+
+  //   try {
+  //     await cr();
+  //     return 'success';
+  //   } catch (e) {
+  //     console.error(e);
+  //     return e;
+  //   }
+  // });
 };
