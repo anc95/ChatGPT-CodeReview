@@ -19,6 +19,11 @@ export default async function middleware(request: any) {
     return rewrite(new URL('https://github.com/apps/cr-gpt'));
   }
 
+  if (!json.before || !json.after || !json.commits) {
+    console.log('invalid event');
+    return "doesn't hit";
+  }
+
   console.log('GO next');
   return next();
 }
