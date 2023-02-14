@@ -36,7 +36,14 @@ export const robot = (app: Probot) => {
       context?.payload?.commits.map(async (commit) => {
         console.log('process commit', commit.id);
 
-        const content = await context.octokit.request(commit.url);
+        const content = await context.octokit.request(
+          'GET /repos/{owner}/{repo}/commits/{commit_sha}',
+          {
+            owner: repo.owner,
+            repo: repo.repo,
+            commit_sha: commit.id,
+          }
+        );
 
         const patch = content?.data?.files?.reduce?.(
           (p: string, { patch, filename }: any) => {
