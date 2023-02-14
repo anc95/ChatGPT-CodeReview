@@ -26,12 +26,16 @@ export const robot = (app: Probot) => {
     const repo = context.repo();
     const chat = await loadChat(context);
 
+    console.log('enter push');
+
     if (!chat) {
       return 'chat initial failed';
     }
 
     await Promise.all(
       context?.payload?.commits.map(async (commit) => {
+        console.log('process commit', commit.id);
+
         const content = await context.octokit.request(commit.url);
 
         const patch = content?.data?.files?.reduce?.(
@@ -40,9 +44,6 @@ export const robot = (app: Probot) => {
           },
           ''
         );
-
-        console.log('start review');
-
         try {
           const result = await chat?.codeReview(patch);
           if (!!result) {
