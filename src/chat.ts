@@ -10,7 +10,8 @@ export class Chat {
 
   private generatePrompt = (patch: string) => {
     return `
-    Bellow is the code patch, please help me do the code review
+    Bellow is the code patch, please help me do the code review\n
+    
     ${patch}
     `;
   };
