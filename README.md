@@ -60,6 +60,9 @@ If you have suggestions for how cr-bot could be improved, or want to report a bu
 
 For more, check out the [Contributing Guide](CONTRIBUTING.md).
 
+## Credit
+this project is inpired by [codereview.gpt](https://github.com/sturdy-dev/codereview.gpt)
+
 ## License
 
 [ISC](LICENSE) © 2023 anc95
