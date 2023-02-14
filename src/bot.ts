@@ -28,6 +28,11 @@ export const robot = (app: Probot) => {
     }
     const repo = context.repo();
     const chat = await loadChat(context);
+
+    if (!chat) {
+      return 'chat initial failed';
+    }
+
     const content = await context.octokit.request(context.payload.commit.url);
 
     const patch = content?.data?.files?.reduce?.(
