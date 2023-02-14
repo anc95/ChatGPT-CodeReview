@@ -4,29 +4,6 @@ import { Chat } from './chat.js';
 const OPENAI_API_KEY = 'OPENAI_API_KEY';
 
 export const robot = (app: Probot) => {
-  // const getDiff = async (context: Context, pullRequestNumber: number) => {
-  //   const repo = context.repo();
-
-  //   console.log(
-  //     'start get diff for: ',
-  //     JSON.stringify(repo),
-  //     pullRequestNumber
-  //   );
-
-  //   const { data: diff } = await context.octokit.pulls.get({
-  //     owner: repo.owner,
-  //     repo: repo.repo,
-  //     pull_number: pullRequestNumber,
-  //     mediaType: {
-  //       format: 'diff',
-  //     },
-  //   });
-
-  //   console.log('get diff done for: ', JSON.stringify(repo));
-
-  //   return diff as unknown as string;
-  // };
-
   const loadChat = async (context: Context) => {
     const repo = context.repo();
     const { data } = (await context.octokit.request(
@@ -46,33 +23,33 @@ export const robot = (app: Probot) => {
   };
 
   app.on('status', async (context) => {
-    context.id;
+    if (context.payload.state != 'pending') {
+      return;
+    }
+    const repo = context.repo();
+    const chat = await loadChat(context);
+    const content = await context.octokit.request(context.payload.commit.url);
+
+    const patch = content?.data?.files?.reduce?.(
+      (p: string, { patch, filename }: any) => {
+        return `${p}\n\n${filename}\n${patch}`;
+      },
+      ''
+    );
+
+    const result = await chat?.codeReview(patch);
+
+    if (!!result) {
+      await context.octokit.request(
+        'POST /repos/{owner}/{repo}/commits/{commit_sha}/comments',
+        {
+          owner: repo.owner,
+          repo: repo.repo,
+          commit_sha: context.payload.sha,
+          body: result,
+        }
+      );
+      return 'success';
+    }
   });
-
-  // app.on('pull_request.opened', async (context) => {
-  //   const chat = await loadChat(context);
-
-  //   if (!chat) {
-  //     return 'no chat initialized';
-  //   }
-
-  //   async function cr() {
-  //     const issueComment = context.issue({
-  //       body: await chat.codeReview(
-  //         context.payload.pull_request.title,
-  //         context.payload.pull_request.diff_url
-  //       ),
-  //     });
-
-  //     await context.octokit.issues.createComment(issueComment);
-  //   }
-
-  //   try {
-  //     await cr();
-  //     return 'success';
-  //   } catch (e) {
-  //     console.error(e);
-  //     return e;
-  //   }
-  // });
 };
