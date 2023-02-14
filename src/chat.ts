@@ -11,7 +11,7 @@ export class Chat {
   private generatePrompt = (patch: string) => {
     return `
     Bellow is the code patch, please help me do the code review\n
-    
+
     ${patch}
     `;
   };
@@ -22,11 +22,11 @@ export class Chat {
     }
 
     console.time('code-review cost');
-    console.log('start query chatGPT');
+    const prompt = this.generatePrompt(patch);
+    console.log(prompt);
 
-    const res = await this.chatAPI.sendMessage(this.generatePrompt(patch));
+    const res = await this.chatAPI.sendMessage(prompt);
 
-    console.log('end query chatGPT');
     console.timeEnd('code-review cost');
     return res.text;
   };
