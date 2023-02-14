@@ -19,5 +19,6 @@ export default async function middleware(request: any) {
     return rewrite(new URL('https://github.com/apps/cr-gpt'));
   }
 
-  return rewrite(new URL('https://github.com/apps/cr-gpt'));
+  console.log('GO next');
+  return next();
 }
