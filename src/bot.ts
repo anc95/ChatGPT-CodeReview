@@ -41,22 +41,28 @@ export const robot = (app: Probot) => {
           ''
         );
 
-        const result = await chat?.codeReview(patch);
+        console.log('start review');
 
-        if (!!result) {
-          await context.octokit.request(
-            'POST /repos/{owner}/{repo}/commits/{commit_sha}/comments',
-            {
-              owner: repo.owner,
-              repo: repo.repo,
-              commit_sha: commit.id,
-              body: result,
-            }
-          );
-          return 'success';
+        try {
+          const result = await chat?.codeReview(patch);
+          if (!!result) {
+            await context.octokit.request(
+              'POST /repos/{owner}/{repo}/commits/{commit_sha}/comments',
+              {
+                owner: repo.owner,
+                repo: repo.repo,
+                commit_sha: commit.id,
+                body: result,
+              }
+            );
+            return 'success';
+          }
+        } catch (e) {
+          console.log(e);
+          return 'failed';
         }
 
-        return 'failed';
+        return '';
       })
     );
 
