@@ -22,10 +22,7 @@ export const robot = (app: Probot) => {
     return new Chat(data.value);
   };
 
-  app.on('status', async (context) => {
-    if (context.payload.state != 'pending') {
-      return 'state is not pending';
-    }
+  app.on('push', async (context) => {
     const repo = context.repo();
     const chat = await loadChat(context);
 
@@ -33,14 +30,25 @@ export const robot = (app: Probot) => {
       return 'chat initial failed';
     }
 
-    const content = await context.octokit.request(context.payload.commit.url);
+    const diff = await context.octokit.request(
+      'GET /repos/{owner}/{repo}/compare/{basehead}',
+      {
+        owner: repo.owner,
+        repo: repo.repo,
+        basehead: `${context.payload.before}...${context.payload.after}`,
+      }
+    );
 
-    const patch = content?.data?.files?.reduce?.(
+    const patch = diff?.data?.files?.reduce?.(
       (p: string, { patch, filename }: any) => {
         return `${p}\n\n${filename}\n${patch}`;
       },
       ''
     );
+
+    if (!patch) {
+      return 'no data';
+    }
 
     const result = await chat?.codeReview(patch);
 
