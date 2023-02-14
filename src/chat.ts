@@ -10,16 +10,8 @@ export class Chat {
 
   private generatePrompt = (patch: string) => {
     return `
-    Act as a code reviewer of a commit, You are provided with bellow patch content
+    Bellow is the code patch, please help me do the code review
     ${patch}
-
-    As a code reviewer, your task is:
-    - Review the code changes (diffs) in the patch and provide feedback.
-    - If there are any bugs, highlight them.
-    - Do not highlight minor issues and nitpicks.
-    - Use bullet points if you have multiple comments.
-    
-    Let's start code review
     `;
   };
 
