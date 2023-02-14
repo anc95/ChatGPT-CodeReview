@@ -8,16 +8,11 @@ export class Chat {
     });
   }
 
-  private generatePrompt = (_: string, patch: string) => {
+  private generatePrompt = (patch: string) => {
     return `
-    Act as a code reviewer of a Pull Request, providing feedback on the code changes below.
-    You are provided with a github pull request diff url.
-    \n\n
-    Diff url of the Pull Request to review:
-    \n
+    Act as a code reviewer of a commit, You are provided with bellow patch content
     ${patch}
-    \n\n
-    
+
     As a code reviewer, your task is:
     - Review the code changes (diffs) in the patch and provide feedback.
     - If there are any bugs, highlight them.
@@ -28,7 +23,7 @@ export class Chat {
     `;
   };
 
-  public codeReview = async (title: string, patch: string) => {
+  public codeReview = async (patch: string) => {
     if (!patch) {
       return '';
     }
@@ -36,9 +31,7 @@ export class Chat {
     console.time('code-review cost');
     console.log('start query chatGPT');
 
-    const res = await this.chatAPI.sendMessage(
-      this.generatePrompt(title, patch)
-    );
+    const res = await this.chatAPI.sendMessage(this.generatePrompt(patch));
 
     console.log('end query chatGPT');
     console.timeEnd('code-review cost');
