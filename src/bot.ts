@@ -56,5 +56,7 @@ export const robot = (app: Probot) => {
       );
       return 'success';
     }
+
+    return 'no result returned';
   });
 };
