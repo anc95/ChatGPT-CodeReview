@@ -12,6 +12,4 @@ const packageJSON = `{
 
 writeFileSync('dist/package.json', packageJSON, 'utf-8');
 
-execSync(
-  'cd dist && npm install && rm -rf node_modules/.bin && rm -rf node_modules/@probot/octokit-plugin-config/node_modules/.bin'
-);
+execSync('cd dist && npm install && rm -rf **/.bin');
