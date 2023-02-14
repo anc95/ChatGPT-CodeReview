@@ -6,7 +6,7 @@
 
 ### Install
 
-Install: https://github.com/apps/cr-bot;
+Install: https://github.com/apps/cr-gpt;
 
 ### Configuration
 
