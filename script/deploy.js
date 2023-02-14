@@ -12,4 +12,4 @@ const packageJSON = `{
 
 writeFileSync('dist/package.json', packageJSON, 'utf-8');
 
-execSync('cd dist && npm install');
+execSync('cd dist && npm install && rm -rf node_modules/.bin');
