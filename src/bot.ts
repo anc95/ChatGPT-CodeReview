@@ -24,7 +24,7 @@ export const robot = (app: Probot) => {
 
   app.on('status', async (context) => {
     if (context.payload.state != 'pending') {
-      return;
+      return 'state is not pending';
     }
     const repo = context.repo();
     const chat = await loadChat(context);
@@ -56,7 +56,7 @@ export const robot = (app: Probot) => {
       );
       return 'success';
     }
-  });
 
-  return 'no result returned';
+    return 'no result returned';
+  });
 };
