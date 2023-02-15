@@ -4,5 +4,4 @@ branding:
   icon: 'gift'
   color: orange
 runs:
-  using: 'node18'
   main: 'action/github-action.js'
