@@ -10,7 +10,8 @@
   "keywords": [
     "probot",
     "github",
-    "probot-app"
+    "probot-app",
+    "code review"
   ],
   "scripts": {
     "start": "node -r dotenv/config ./dist/index.js",
