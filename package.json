@@ -24,6 +24,7 @@
     "chatgpt": "^4.2.0",
     "dotenv": "^16.0.3",
     "next": "^13.1.6",
+    "node-fetch": "^3.3.0",
     "probot": "^12.2.4"
   },
   "devDependencies": {

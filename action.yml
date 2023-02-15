@@ -4,6 +4,5 @@ branding:
   icon: 'gift'
   color: orange
 runs:
-  using: 'docker'
-  image: 'docker://node:18.14.0'
-  entrypoint: 'node action/github-action.js'
+  using: 'node16'
+  main: 'action/github-action.js'
