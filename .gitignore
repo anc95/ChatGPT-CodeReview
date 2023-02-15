@@ -5,5 +5,5 @@ npm-debug.log
 .env
 coverage
 lib
-dist
 *.cache/**
+dist/

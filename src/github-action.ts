@@ -1,4 +1,4 @@
 import githubAction from '@probot/adapter-github-actions';
-import { robot } from './bot'
+import { robot } from './bot';
 
-githubAction.run(robot)
+githubAction.run(robot);

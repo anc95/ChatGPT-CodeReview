@@ -2,7 +2,7 @@ import esbuild from 'rollup-plugin-esbuild';
 import { defineConfig } from 'rollup';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
-import json from '@rollup/plugin-json'
+import json from '@rollup/plugin-json';
 
 export default defineConfig([
   {
@@ -43,10 +43,10 @@ export default defineConfig([
   {
     input: 'src/github-action.ts',
     output: {
-      dir: 'dist/',
+      dir: 'action/',
       format: 'esm',
       inlineDynamicImports: false,
     },
     plugins: [esbuild(), nodeResolve(), commonjs(), json()],
-  }
+  },
 ]);
