@@ -13,10 +13,9 @@
     "probot-app"
   ],
   "scripts": {
-    "start": "node -r dotenv/config ./dist/lib/index.js",
+    "start": "node -r dotenv/config ./dist/index.js",
     "test": "jest",
-    "build": "rm -rf dist && rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
-    "deploy": "node -r dotenv/config"
+    "build": "rm -rf dist && rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript"
   },
   "dependencies": {
     "@vercel/edge": "^0.2.7",
