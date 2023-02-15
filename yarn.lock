@@ -1285,6 +1285,11 @@
   "resolved" "https://registry.npmjs.org/@vercel/edge/-/edge-0.2.7.tgz"
   "version" "0.2.7"
 
+"@vercel/ncc@^0.36.1":
+  "integrity" "sha512-S4cL7Taa9yb5qbv+6wLgiKVZ03Qfkc4jGRuiUQMQ8HGBD5pcNRnHeYM33zBvJE4/zJGjJJ8GScB+WmTsn9mORw=="
+  "resolved" "https://registry.npmjs.org/@vercel/ncc/-/ncc-0.36.1.tgz"
+  "version" "0.36.1"
+
 "abort-controller@^3.0.0":
   "integrity" "sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg=="
   "resolved" "https://registry.npmjs.org/abort-controller/-/abort-controller-3.0.0.tgz"
