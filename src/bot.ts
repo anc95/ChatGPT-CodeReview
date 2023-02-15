@@ -23,13 +23,11 @@ export const robot = (app: Probot) => {
     return new Chat(data.value);
   };
 
-  app.on('pull_request.opened', async (context) => {
+  app.on(['pull_request.opened', 'pull_request.synchronize'], async (context) => {
     const repo = context.repo();
     const chat = await loadChat(context);
 
-    const {
-      data: { files },
-    } = await context.octokit.request(
+    const data = await context.octokit.request(
       `GET /repos/{owner}/{repo}/compare/{basehead}`,
       {
         owner: repo.owner,
@@ -37,6 +35,8 @@ export const robot = (app: Probot) => {
         basehead: `${context.payload.pull_request.base.sha}...${context.payload.pull_request.head.sha}`,
       }
     );
+
+    const { files, commits } = data.data;
 
     if (!files?.length) {
       return;
@@ -56,9 +56,10 @@ export const robot = (app: Probot) => {
           repo: repo.repo,
           owner: repo.owner,
           pull_number: context.pullRequest().pull_number,
-          commit_id: file.sha,
+          commit_id: commits[commits.length - 1].sha,
           path: file.filename,
           body: res,
+          position: patch.split('\n').length - 1
         });
       }
     }
