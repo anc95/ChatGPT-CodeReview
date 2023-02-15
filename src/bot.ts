@@ -22,61 +22,10 @@ export const robot = (app: Probot) => {
     return new Chat(data.value);
   };
 
-  app.on('push', async (context) => {
+  app.on('pull_request.opened', async (context) => {
     const repo = context.repo();
     const chat = await loadChat(context);
 
-    console.log('enter push');
-
-    if (!chat) {
-      return 'chat initial failed';
-    }
-
-    await Promise.all(
-      context?.payload?.commits.map(async (commit) => {
-        console.log('process commit', commit.id);
-
-        const content = await context.octokit.request(
-          'GET /repos/{owner}/{repo}/commits/{commit_sha}',
-          {
-            owner: repo.owner,
-            repo: repo.repo,
-            commit_sha: commit.id,
-          }
-        );
-
-        const patch = content?.data?.files?.reduce?.(
-          (p: string, { patch, filename }: any) => {
-            return `${p}\n\n${filename}\n${patch}`;
-          },
-          ''
-        );
-        try {
-          const result = await chat?.codeReview(patch);
-
-          console.log(patch, result);
-
-          if (!!result) {
-            await context.octokit.request(
-              'POST /repos/{owner}/{repo}/commits/{commit_sha}/comments',
-              {
-                owner: repo.owner,
-                repo: repo.repo,
-                commit_sha: commit.id,
-                body: result,
-              }
-            );
-            return 'success';
-          }
-        } catch (e) {
-          console.log(e);
-          return 'failed';
-        }
-
-        return '';
-      })
-    );
-
-    return 'success';
+    const pl = context.payload.pull_request;
   });
 };
