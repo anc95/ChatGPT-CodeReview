@@ -18,19 +18,26 @@ Install: https://github.com/apps/cr-gpt;
 
 ### Start using
 
-1. The robot will automatically do the code review when you create a new Pull request.
-2. Meanwhile, you can always trigger the code review manually by comment with `/cr-gpt`
+1. The robot will automatically do the code review when you create a new Pull request, the review information will show in the tiemline / file changes part.
+2. After `git push` update the pull request, cr bot will re-review the changed files
 
 example:
 
-<img width="1024" alt="image" src="https://user-images.githubusercontent.com/13167934/218536087-9c951161-88ca-42b4-8cef-0cc1cd62eff2.png">
+https://github.com/anc95/ChatGPT-CodeReview/pull/21
 
-2. Meanwhile, you can always trigger the code review manually by comment with `/cr-gpt`
+<img width="1052" alt="image" src="https://user-images.githubusercontent.com/13167934/218999459-812206e1-d8d2-4900-8ce8-19b5b6e1f5cb.png">
 
 ## Self-hosting
-I am using the vercel to host this service, it's a hobby account, so there is much limitation for using, you can use the code to deploy one yourself on vercel, and config the webhook
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/anc95/ChatGPT-CodeReview)
+1. clone code
+
+2.
+```sh
+npm i
+npm -i g pm2
+npm run build
+pm2 start pm2.config.cjs
+```
 
 ## Dev
 
