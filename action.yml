@@ -1,0 +1,8 @@
+name: ChatGPT CodeReviewer
+description: 'A Code Review Action Powered By ChatGPT'
+branding:
+  icon: 'gift'
+  color: orange
+runs:
+  using: 'node18'
+  main: 'action/github-action.js'
