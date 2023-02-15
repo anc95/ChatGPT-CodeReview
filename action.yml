@@ -5,4 +5,4 @@ branding:
   color: orange
 runs:
   using: 'node16'
-  main: 'action/github-action.js'
+  main: 'action/github-action.cjs'

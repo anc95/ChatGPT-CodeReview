@@ -43,9 +43,9 @@ export default defineConfig([
   {
     input: 'src/github-action.ts',
     output: {
-      dir: 'action/',
-      format: 'esm',
-      inlineDynamicImports: false,
+      file: 'action/github-action.cjs',
+      format: 'cjs',
+      inlineDynamicImports: true,
     },
     plugins: [esbuild(), nodeResolve(), commonjs(), json()],
   },
