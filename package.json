@@ -16,7 +16,7 @@
     "start": "node -r dotenv/config ./dist/lib/index.js",
     "test": "jest",
     "build": "rm -rf dist && rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
-    "deploy": "node script/deploy.js"
+    "deploy": "node -r dotenv/config"
   },
   "dependencies": {
     "@vercel/edge": "^0.2.7",

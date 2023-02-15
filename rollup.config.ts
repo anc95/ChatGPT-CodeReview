@@ -25,7 +25,7 @@ export default defineConfig([
   {
     input: 'src/index.ts',
     output: {
-      dir: 'dist/lib/',
+      dir: 'dist/',
       format: 'esm',
       inlineDynamicImports: false,
     },
