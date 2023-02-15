@@ -5,5 +5,5 @@ branding:
   color: orange
 runs:
   using: 'docker'
-  image: 'docker://node:18.14.0',
+  image: 'docker://node:18.14.0'
   main: 'action/github-action.js'
