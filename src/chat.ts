@@ -9,7 +9,7 @@ export class Chat {
   }
 
   private generatePrompt = (patch: string) => {
-    return `Bellow is the code patch, please help me do the code review\n
+    return `Bellow is the code patch, please help me do the code review
     ${patch}
     `;
   };
@@ -23,7 +23,10 @@ export class Chat {
     const prompt = this.generatePrompt(patch);
     console.log(prompt);
 
-    const res = await this.chatAPI.sendMessage(prompt);
+    const res = await this.chatAPI.sendMessage(prompt, {
+      promptPrefix: 'hi,',
+      promptSuffix: "\nlet's start",
+    });
 
     console.timeEnd('code-review cost');
     return res.text;

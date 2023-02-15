@@ -2,6 +2,7 @@ import { Context, Probot } from 'probot';
 import { Chat } from './chat.js';
 
 const OPENAI_API_KEY = 'OPENAI_API_KEY';
+const MAX_PATCH_COUNT = 4000;
 
 export const robot = (app: Probot) => {
   const loadChat = async (context: Context) => {
@@ -22,61 +23,45 @@ export const robot = (app: Probot) => {
     return new Chat(data.value);
   };
 
-  app.on('push', async (context) => {
+  app.on(['pull_request.opened', 'pull_request.synchronize'], async (context) => {
     const repo = context.repo();
     const chat = await loadChat(context);
 
-    console.log('enter push');
-
-    if (!chat) {
-      return 'chat initial failed';
-    }
-
-    await Promise.all(
-      context?.payload?.commits.map(async (commit) => {
-        console.log('process commit', commit.id);
-
-        const content = await context.octokit.request(
-          'GET /repos/{owner}/{repo}/commits/{commit_sha}',
-          {
-            owner: repo.owner,
-            repo: repo.repo,
-            commit_sha: commit.id,
-          }
-        );
-
-        const patch = content?.data?.files?.reduce?.(
-          (p: string, { patch, filename }: any) => {
-            return `${p}\n\n${filename}\n${patch}`;
-          },
-          ''
-        );
-        try {
-          const result = await chat?.codeReview(patch);
-
-          console.log(patch, result);
-
-          if (!!result) {
-            await context.octokit.request(
-              'POST /repos/{owner}/{repo}/commits/{commit_sha}/comments',
-              {
-                owner: repo.owner,
-                repo: repo.repo,
-                commit_sha: commit.id,
-                body: result,
-              }
-            );
-            return 'success';
-          }
-        } catch (e) {
-          console.log(e);
-          return 'failed';
-        }
-
-        return '';
-      })
+    const data = await context.octokit.request(
+      `GET /repos/{owner}/{repo}/compare/{basehead}`,
+      {
+        owner: repo.owner,
+        repo: repo.repo,
+        basehead: `${context.payload.pull_request.base.sha}...${context.payload.pull_request.head.sha}`,
+      }
     );
 
-    return 'success';
+    const { files, commits } = data.data;
+
+    if (!files?.length) {
+      return;
+    }
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const patch = file.patch || '';
+
+      if (!patch || patch.length > MAX_PATCH_COUNT) {
+        continue;
+      }
+      const res = await chat?.codeReview(patch);
+
+      if (!!res) {
+        await context.octokit.pulls.createReviewComment({
+          repo: repo.repo,
+          owner: repo.owner,
+          pull_number: context.pullRequest().pull_number,
+          commit_id: commits[commits.length - 1].sha,
+          path: file.filename,
+          body: res,
+          position: patch.split('\n').length - 1
+        });
+      }
+    }
   });
 };
