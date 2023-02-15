@@ -6,4 +6,4 @@ branding:
 runs:
   using: 'docker'
   image: 'docker://node:18.14.0'
-  main: 'action/github-action.js'
+  entrypoint: 'node action/github-action.js'
