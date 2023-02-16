@@ -2,7 +2,7 @@
 
 > 由 ChatGPT 提供支持的代碼審查機器人
 
-翻譯版本：[英語](./README.md)\|[中文簡體](./README.zh-CN.md)\|[中文繁體](./README.zh-TW.md)
+翻譯版本：[英語](./README.md)\|[中文簡體](./README.zh-CN.md) \| [中文繁體](./README.zh-TW.md)
 
 ## 用法
 
@@ -13,13 +13,13 @@
 ### 配置
 
 1.  前往<repo>你想整合這個機器人
-2.  點擊`settings`
+2.  click `settings`
 3.  點擊`actions`在下面`secrets and variables`
 4.  改成`Variables`選項卡，創建一個新變量`OPENAI_API_KEY`使用您打開的 api 密鑰的值<img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
 
 ### 開始使用
 
-1.  The robot will automatically do the code review when you create a new Pull request, the review information will show in the pr timeline / file changes part.
+1.  當你創建一個新的 Pull request 時，機器人會自動進行代碼審查，審查信息將顯示在 pr timeline / file changes 部分。
 2.  後`git push`更新拉取請求，cr bot 將重新審查更改的文件
 
 例子：
@@ -61,8 +61,8 @@ jobs:
 ## 自託管
 
 1.  克隆代碼
-
-2.
+2.  複製`.env.example`到`.env`, 並填寫環境變量
+3.  安裝deps並運行
 
 ```sh
 npm i
@@ -70,6 +70,8 @@ npm -i g pm2
 npm run build
 pm2 start pm2.config.cjs
 ```
+
+[機器人](https://probot.github.io/docs/development/)了解更多詳情
 
 ## 開發
 
