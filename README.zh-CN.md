@@ -6,7 +6,7 @@
 
 ## 用法
 
-### Install
+### 安装
 
 安装：[应用程序/cr-gpt](https://github.com/apps/cr-gpt);
 
@@ -28,7 +28,7 @@
 
 <img width="1052" alt="image" src="https://user-images.githubusercontent.com/13167934/218999459-812206e1-d8d2-4900-8ce8-19b5b6e1f5cb.png">
 
-### 使用 Github 操作
+### Using Github Actions
 
 > 这是推荐的方式，因为 github bot 在一个不起眼的 vps 上服务，我不能确保它总是稳定的
 
