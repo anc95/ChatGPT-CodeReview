@@ -2,13 +2,13 @@
 
 > 由 ChatGPT 提供支持的代碼審查機器人
 
-翻譯版本：[英語](./README.md)\|[中文簡體](./README.zh-CN.md)\|[中文繁體](./README.zh-TW.md)
+翻譯版本：[英語](./README.md)\|[中文簡體](./README.zh-CN.md) \| [中文繁體](./README.zh-TW.md)
 
 ## 用法
 
 ### 安裝
 
-安裝：<https://github.com/apps/cr-gpt>;
+安裝：[應用程序/cr-gpt](https://github.com/apps/cr-gpt);
 
 ### 配置
 
@@ -19,20 +19,20 @@
 
 ### 開始使用
 
-1.  當你創建一個新的 Pull request 時，機器人會自動進行代碼審查，審查信息將顯示在 pr timeline / file changes 部分。
+1.  當您創建一個新的 Pull request 時，機器人會自動進行代碼審查，審查信息將顯示在 pr timeline / file changes 部分。
 2.  後`git push`更新拉取請求，cr bot 將重新審查更改的文件
 
 例子：
 
-<https://github.com/anc95/ChatGPT-CodeReview/pull/21>
+[ChatGPT-CodeReview/拉/21](https://github.com/anc95/ChatGPT-CodeReview/pull/21)
 
 <img width="1052" alt="image" src="https://user-images.githubusercontent.com/13167934/218999459-812206e1-d8d2-4900-8ce8-19b5b6e1f5cb.png">
 
-### 使用 Github 操作
+### 使用 Github 動作
 
 > 這是推薦的方式，因為 github bot 在一個不起眼的 vps 上服務，我不能確保它總是穩定的
 
-<https://github.com/marketplace/actions/chatgpt-codereviewer>
+[動作/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
 
 1.  添加`OPEN_API_KEY`到你的 github 操作秘密
 2.  創造`.github/workflow/cr.yml`添加以下內容
@@ -103,6 +103,6 @@ docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> cr-bot
 
 這個項目的靈感來自[代碼審查.gpt](https://github.com/sturdy-dev/codereview.gpt)
 
-## License
+## 執照
 
 [國際學習中心](LICENSE)© 2023 anc95
