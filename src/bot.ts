@@ -32,6 +32,11 @@ export const robot = (app: Probot) => {
     async (context) => {
       const repo = context.repo();
       const chat = await loadChat(context);
+
+      if (!chat) {
+        return 'no chat'
+      }
+
       const pull_request = context.payload.pull_request;
 
       if (
@@ -39,7 +44,7 @@ export const robot = (app: Probot) => {
         pull_request.locked ||
         pull_request.draft
       ) {
-        return;
+        return 'invalid event paylod';
       }
 
       const data = await context.octokit.repos.compareCommits({
@@ -59,7 +64,7 @@ export const robot = (app: Probot) => {
             owner: repo.owner,
             repo: repo.repo,
             base: commits[commits.length - 2].sha,
-            head: commits[commits.length - 2].sha,
+            head: commits[commits.length - 1].sha,
           });
 
           const filesNames = files?.map((file) => file.filename) || [];
@@ -70,8 +75,10 @@ export const robot = (app: Probot) => {
       }
 
       if (!changedFiles?.length) {
-        return;
+        return 'no change';
       }
+
+      console.time('gpt cost')
 
       for (let i = 0; i < changedFiles.length; i++) {
         const file = changedFiles[i];
@@ -94,6 +101,10 @@ export const robot = (app: Probot) => {
           });
         }
       }
+
+      console.timeEnd('gpt cost')
+
+      return 'success'
     }
   );
 };
