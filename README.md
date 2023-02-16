@@ -2,7 +2,7 @@
 
 > A code review robot powered by ChatGPT
 
-Translation Versions: [EN](./README.md) | [中文简体](./README.zh-CN.md) | [中文繁體](./README.zh-TW.md)
+Translation Versions: [ENGLISH](./README.md) | [中文简体](./README.zh-CN.md) | [中文繁體](./README.zh-TW.md)
 
 ## Usage
 
