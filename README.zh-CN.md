@@ -6,9 +6,9 @@
 
 ## 用法
 
-### 安装
+### Install
 
-安装：[HTTPS://GitHub.com/apps/成人-高频头](https://github.com/apps/cr-gpt);
+安装：[应用程序/cr-gpt](https://github.com/apps/cr-gpt);
 
 ### 配置
 
@@ -24,15 +24,15 @@
 
 例子：
 
-[HTTPS://GitHub.com/按此95/chat GPT-co的review/pull/21](https://github.com/anc95/ChatGPT-CodeReview/pull/21)
+[ChatGPT-CodeReview/拉/21](https://github.com/anc95/ChatGPT-CodeReview/pull/21)
 
 <img width="1052" alt="image" src="https://user-images.githubusercontent.com/13167934/218999459-812206e1-d8d2-4900-8ce8-19b5b6e1f5cb.png">
 
-### 使用 Github 动作
+### 使用 Github 操作
 
 > 这是推荐的方式，因为 github bot 在一个不起眼的 vps 上服务，我不能确保它总是稳定的
 
-[HTTPS://GitHub.com/marketplace/actions/chat GPT-co的reviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
+[动作/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
 
 1.  添加`OPEN_API_KEY`到你的 github 操作秘密
 2.  创造`.github/workflow/cr.yml`添加以下内容
