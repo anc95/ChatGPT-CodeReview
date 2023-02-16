@@ -2,7 +2,7 @@
 
 > 由 ChatGPT 提供支持的代碼審查機器人
 
-翻譯版本：[英語](./README.md)\|[中文簡體](./README.zh-CN.md) \| [中文繁體](./README.zh-TW.md)
+翻譯版本：[英語](./README.md)\|[中文簡體](./README.zh-CN.md)\|[中文繁體](./README.zh-TW.md)
 
 ## 用法
 
@@ -19,7 +19,7 @@
 
 ### 開始使用
 
-1.  當您創建一個新的 Pull request 時，機器人會自動進行代碼審查，審查信息將顯示在 pr timeline / file changes 部分。
+1.  The robot will automatically do the code review when you create a new Pull request, the review information will show in the pr timeline / file changes part.
 2.  後`git push`更新拉取請求，cr bot 將重新審查更改的文件
 
 例子：
