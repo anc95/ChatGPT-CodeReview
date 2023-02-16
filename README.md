@@ -31,6 +31,8 @@ https://github.com/anc95/ChatGPT-CodeReview/pull/21
 
 > this is a recommended way as github bot is serving on a humble vps, I can't make sure it's always stable
 
+https://github.com/marketplace/actions/chatgpt-codereviewer
+
 1. add the `OPEN_API_KEY` to your github actions secrets
 2. create `.github/workflow/cr.yml` add bellow content
 
