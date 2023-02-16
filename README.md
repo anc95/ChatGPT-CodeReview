@@ -14,7 +14,7 @@ Install: https://github.com/apps/cr-gpt;
 2. click `settings`
 3. click `actions` under `secrets and variables`
 4. Change to `Variables` tab, create a new variable `OPENAI_API_KEY` with the value of your open api key
-<img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
+   <img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
 
 ### Start using
 
@@ -27,11 +27,40 @@ https://github.com/anc95/ChatGPT-CodeReview/pull/21
 
 <img width="1052" alt="image" src="https://user-images.githubusercontent.com/13167934/218999459-812206e1-d8d2-4900-8ce8-19b5b6e1f5cb.png">
 
+### Using Github Actions
+
+> this is a recommended way as github bot is serving on a humble vps, I can't make sure it's always stable
+
+1. add the `OPEN_API_KEY` to your github actions secrets
+2. create `.github/workflow/cr.yml` add bellow content
+
+```yml
+name: Code Review
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: anc95/ChatGPT-CodeReview@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+```
+
 ## Self-hosting
 
 1. clone code
 
 2.
+
 ```sh
 npm i
 npm -i g pm2
@@ -68,6 +97,7 @@ If you have suggestions for how cr-bot could be improved, or want to report a bu
 For more, check out the [Contributing Guide](CONTRIBUTING.md).
 
 ## Credit
+
 this project is inpired by [codereview.gpt](https://github.com/sturdy-dev/codereview.gpt)
 
 ## License
