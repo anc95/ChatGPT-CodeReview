@@ -28,11 +28,11 @@
 
 <img width="1052" alt="image" src="https://user-images.githubusercontent.com/13167934/218999459-812206e1-d8d2-4900-8ce8-19b5b6e1f5cb.png">
 
-### Using Github Actions
+### 使用 Github 动作
 
 > 这是推荐的方式，因为 github bot 在一个不起眼的 vps 上服务，我不能确保它总是稳定的
 
-[动作/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
+[actions/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
 
 1.  添加`OPEN_API_KEY`到你的 github 操作秘密
 2.  创造`.github/workflow/cr.yml`添加以下内容
@@ -61,8 +61,8 @@ jobs:
 ## 自托管
 
 1.  克隆代码
-
-2.
+2.  复制`.env.example`到`.env`, 并填写环境变量
+3.  安装deps并运行
 
 ```sh
 npm i
@@ -70,6 +70,8 @@ npm -i g pm2
 npm run build
 pm2 start pm2.config.cjs
 ```
+
+[机器人](https://probot.github.io/docs/development/)了解更多详情
 
 ## 开发
 
@@ -105,4 +107,4 @@ docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> cr-bot
 
 ## 执照
 
-[国际学习中心](LICENSE)© 2023 anc95
+[国际学习中心](LICENSE) © 2023 anc95
