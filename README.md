@@ -62,15 +62,16 @@ jobs:
 ## Self-hosting
 
 1. clone code
-
-2.
-
+2. copy `.env.example` to `.env`, and fill the env variables
+3. install deps and run
 ```sh
 npm i
 npm -i g pm2
 npm run build
 pm2 start pm2.config.cjs
 ```
+
+[probot](https://probot.github.io/docs/development/) for more detail
 
 ## Dev
 
