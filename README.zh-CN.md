@@ -2,6 +2,8 @@
 
 > 由 ChatGPT 提供支持的代码审查机器人
 
+文档：[在](./README.md)\|[J-KN](./README.zh-CN.md)\|[Zh-TV](./README.zh-TW.md)
+
 ## 用法
 
 ### 安装
