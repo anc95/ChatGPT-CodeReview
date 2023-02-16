@@ -2,7 +2,7 @@
 
 > 由 ChatGPT 提供支持的代碼審查機器人
 
-文檔：[在](./README.md)\|[J-KN](./README.zh-CN.md)\|[Zh-TV](./README.zh-TW.md)
+翻譯版本：[在](./README.md)\|[中文簡體](./README.zh-CN.md)\|[中文繁體](./README.zh-TW.md)
 
 ## 用法
 
@@ -15,7 +15,7 @@
 1.  前往<repo>你想整合這個機器人
 2.  點擊`settings`
 3.  點擊`actions`在下面`secrets and variables`
-4.  改成`Variables` tab, create a new variable `OPENAI_API_KEY`使用您打開的 api 密鑰的值<img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
+4.  改成`Variables`選項卡，創建一個新變量`OPENAI_API_KEY`使用您打開的 api 密鑰的值<img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
 
 ### 開始使用
 
