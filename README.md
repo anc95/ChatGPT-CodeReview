@@ -8,7 +8,7 @@ Translation Versions: [ENGLISH](./README.md) | [中文简体](./README.zh-CN.md)
 
 ### Install
 
-Install: https://github.com/apps/cr-gpt;
+Install: [apps/cr-gpt](https://github.com/apps/cr-gpt);
 
 ### Configuration
 
@@ -25,7 +25,7 @@ Install: https://github.com/apps/cr-gpt;
 
 example:
 
-https://github.com/anc95/ChatGPT-CodeReview/pull/21
+[ChatGPT-CodeReview/pull/21](https://github.com/anc95/ChatGPT-CodeReview/pull/21)
 
 <img width="1052" alt="image" src="https://user-images.githubusercontent.com/13167934/218999459-812206e1-d8d2-4900-8ce8-19b5b6e1f5cb.png">
 
@@ -33,7 +33,7 @@ https://github.com/anc95/ChatGPT-CodeReview/pull/21
 
 > this is a recommended way as github bot is serving on a humble vps, I can't make sure it's always stable
 
-https://github.com/marketplace/actions/chatgpt-codereviewer
+[actions/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
 
 1. add the `OPEN_API_KEY` to your github actions secrets
 2. create `.github/workflow/cr.yml` add bellow content
