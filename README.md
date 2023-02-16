@@ -2,6 +2,8 @@
 
 > A code review robot powered by ChatGPT
 
+Doc: [EN](./README.md) | [ZH-CN](./README.zh-CN.md) | [ZH-TW](./README.zh-TW.md)
+
 ## Usage
 
 ### Install
