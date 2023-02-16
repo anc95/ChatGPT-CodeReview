@@ -6,13 +6,13 @@
 
 ## 用法
 
-### 安装
+### Install
 
 安装：[应用程序/cr-gpt](https://github.com/apps/cr-gpt);
 
 ### 配置
 
-1.  前往<repo>你想整合这个机器人
+1.  转到要集成此机器人的回购主页
 2.  点击`settings`
 3.  点击`actions`在下面`secrets and variables`
 4.  改成`Variables`选项卡，创建一个新变量`OPENAI_API_KEY`使用您打开的 api 密钥的值<img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
@@ -32,7 +32,7 @@
 
 > 这是推荐的方式，因为 github bot 在一个不起眼的 vps 上服务，我不能确保它总是稳定的
 
-[actions/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
+[动作/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
 
 1.  添加`OPEN_API_KEY`到你的 github 操作秘密
 2.  创造`.github/workflow/cr.yml`添加以下内容
@@ -61,7 +61,7 @@ jobs:
 ## 自托管
 
 1.  克隆代码
-2.  复制`.env.example`到`.env`, 并填写环境变量
+2.  复制`.env.example`到`.env`, and fill the env variables
 3.  安装deps并运行
 
 ```sh
@@ -107,4 +107,4 @@ docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> cr-bot
 
 ## 执照
 
-[国际学习中心](LICENSE) © 2023 anc95
+[国际学习中心](LICENSE)© 2023 anc95
