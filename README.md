@@ -12,7 +12,7 @@ Install: [apps/cr-gpt](https://github.com/apps/cr-gpt);
 
 ### Configuration
 
-1. Go to the <repo> you want integrate this bot
+1. Go to the repo homepage which you want integrate this bot
 2. click `settings`
 3. click `actions` under `secrets and variables`
 4. Change to `Variables` tab, create a new variable `OPENAI_API_KEY` with the value of your open api key
