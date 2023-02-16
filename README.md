@@ -18,7 +18,7 @@ Install: https://github.com/apps/cr-gpt;
 
 ### Start using
 
-1. The robot will automatically do the code review when you create a new Pull request, the review information will show in the tiemline / file changes part.
+1. The robot will automatically do the code review when you create a new Pull request, the review information will show in the pr timeline / file changes part.
 2. After `git push` update the pull request, cr bot will re-review the changed files
 
 example:
