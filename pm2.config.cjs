@@ -2,7 +2,8 @@ const config = {
   apps : [{
     name      : 'Bot',
     script    : 'dist/index.js',
-    node_args : '-r dotenv/config',
+    interpreter_args : '-r dotenv/config',
+    time: true
   }]
 }
 

@@ -21,7 +21,6 @@ export class Chat {
 
     console.time('code-review cost');
     const prompt = this.generatePrompt(patch);
-    console.log(prompt);
 
     const res = await this.chatAPI.sendMessage(prompt, {
       promptPrefix: 'hi,',
