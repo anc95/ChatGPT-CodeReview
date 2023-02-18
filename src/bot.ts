@@ -11,20 +11,30 @@ export const robot = (app: Probot) => {
     }
 
     const repo = context.repo();
-    const { data } = (await context.octokit.request(
-      'GET /repos/{owner}/{repo}/actions/variables/{name}',
-      {
-        owner: repo.owner,
-        repo: repo.repo,
-        name: OPENAI_API_KEY,
+
+    try {
+      const { data } = (await context.octokit.request(
+        'GET /repos/{owner}/{repo}/actions/variables/{name}',
+        {
+          owner: repo.owner,
+          repo: repo.repo,
+          name: OPENAI_API_KEY,
+        }
+      )) as any;
+
+      if (!data?.value) {
+        return null;
       }
-    )) as any;
 
-    if (!data?.value) {
-      return null;
+      return new Chat(data.value);
+    } catch {
+      await context.octokit.issues.createComment({
+        repo: repo.repo,
+        owner: repo.owner,
+        issue_number: context.pullRequest().pull_number,
+        body: `Seems you are using me but didn't get OPENAI_API_KEY seted in Variables for this repo. you could follow [readme](https://github.com/anc95/ChatGPT-CodeReview) for more information`,
+      });
     }
-
-    return new Chat(data.value);
   };
 
   app.on(
@@ -34,7 +44,7 @@ export const robot = (app: Probot) => {
       const chat = await loadChat(context);
 
       if (!chat) {
-        return 'no chat'
+        return 'no chat';
       }
 
       const pull_request = context.payload.pull_request;
@@ -78,7 +88,7 @@ export const robot = (app: Probot) => {
         return 'no change';
       }
 
-      console.time('gpt cost')
+      console.time('gpt cost');
 
       for (let i = 0; i < changedFiles.length; i++) {
         const file = changedFiles[i];
@@ -102,9 +112,9 @@ export const robot = (app: Probot) => {
         }
       }
 
-      console.timeEnd('gpt cost')
+      console.timeEnd('gpt cost');
 
-      return 'success'
+      return 'success';
     }
   );
 };
