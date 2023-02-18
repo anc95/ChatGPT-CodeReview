@@ -17,7 +17,7 @@
 3.  點擊`actions`在下面`secrets and variables`
 4.  改成`Variables`選項卡，創建一個新變量`OPENAI_API_KEY`使用您打開的 api 密鑰的值<img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
 
-### Start using
+### 開始使用
 
 1.  當您創建一個新的 Pull request 時，機器人會自動進行代碼審查，審查信息將顯示在 pr timeline / file changes 部分。
 2.  後`git push`更新拉取請求，cr bot 將重新審查更改的文件
