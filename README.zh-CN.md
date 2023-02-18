@@ -97,7 +97,7 @@ docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> cr-bot
 
 ## 贡献
 
-如果您对如何改进 cr-bot 有建议，或者想报告错误，请打开一个问题！我们会喜欢所有的贡献。
+If you have suggestions for how cr-bot could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
 
 有关更多信息，请查看[投稿指南](CONTRIBUTING.md).
 
