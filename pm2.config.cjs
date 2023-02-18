@@ -1,6 +1,6 @@
 const config = {
   apps : [{
-    name      : 'My Application',
+    name      : 'Bot',
     script    : 'dist/index.js',
     node_args : '-r dotenv/config',
   }]
