@@ -19,7 +19,7 @@
 
 ### 开始使用
 
-1.  当您创建一个新的 Pull request 时，机器人会自动进行代码审查，审查信息将显示在 pr timeline / file changes 部分。
+1.  当你创建一个新的 Pull request 时，机器人会自动进行代码审查，审查信息将显示在 pr timeline / file changes 部分。
 2.  后`git push`更新拉取请求，cr bot 将重新审查更改的文件
 
 例子：
@@ -28,7 +28,7 @@
 
 <img width="1052" alt="image" src="https://user-images.githubusercontent.com/13167934/218999459-812206e1-d8d2-4900-8ce8-19b5b6e1f5cb.png">
 
-### 使用 Github 操作
+### 使用 Github 动作
 
 > 这是推荐的方式，因为 github bot 在一个不起眼的 vps 上服务，我不能确保它总是稳定的
 
