@@ -12,9 +12,9 @@
 
 ### 配置
 
-1.  进入需要集成`cr-gpt`Bot的仓库主页
-2.  点击`Settings`
-3.  点击`Secrets and variables`菜单下的`Actions`
+1.  转到要集成此机器人的回购主页
+2.  点击`settings`
+3.  点击`actions`在下面`secrets and variables`
 4.  改成`Variables`选项卡，创建一个新变量`OPENAI_API_KEY`使用您打开的 api 密钥的值<img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
 
 ### 开始使用
@@ -97,7 +97,7 @@ docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> cr-bot
 
 ## 贡献
 
-If you have suggestions for how cr-bot could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
+如果您对如何改进 cr-bot 有建议，或者想报告错误，请打开一个问题！我们会喜欢所有的贡献。
 
 有关更多信息，请查看[投稿指南](CONTRIBUTING.md).
 
