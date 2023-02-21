@@ -1,28 +1,28 @@
-name: Translate README
+# name: Translate README
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
       
-permissions:
-  contents: write
+# permissions:
+#   contents: write
   
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      # ISO Langusge Codes: https://cloud.google.com/translate/docs/languages  
-      - name: Adding README - Chinese Simplified
-        uses: dephraiim/translate-readme@main
-        with:
-          LANG: zh-CN
-      - name: Adding README - Chinese Traditional
-        uses: dephraiim/translate-readme@main
-        with:
-          LANG: zh-TW
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: 12.x
+#       # ISO Langusge Codes: https://cloud.google.com/translate/docs/languages  
+#       - name: Adding README - Chinese Simplified
+#         uses: dephraiim/translate-readme@main
+#         with:
+#           LANG: zh-CN
+#       - name: Adding README - Chinese Traditional
+#         uses: dephraiim/translate-readme@main
+#         with:
+#           LANG: zh-TW
