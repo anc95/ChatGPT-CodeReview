@@ -12,9 +12,9 @@
 
 ### 配置
 
-1.  转到要集成此机器人的回购主页
-2.  点击`settings`
-3.  点击`actions`在下面`secrets and variables`
+1.  进入需要集成`cr-gpt`Bot的仓库主页
+2.  点击`Settings`
+3.  点击`Secrets and variables`菜单下的`Actions`
 4.  改成`Variables`选项卡，创建一个新变量`OPENAI_API_KEY`使用您打开的 api 密钥的值<img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
 
 ### 开始使用
