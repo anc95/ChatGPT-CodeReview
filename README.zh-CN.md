@@ -35,7 +35,7 @@
 [动作/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
 
 1.  添加`OPEN_API_KEY`到你的 github 操作秘密
-2.  创造`.github/workflow/cr.yml`添加以下内容
+2.  创造`.github/workflows/cr.yml`添加以下内容
 
 ```yml
 name: Code Review
