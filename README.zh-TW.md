@@ -8,34 +8,34 @@
 
 ### 安裝
 
-安裝：[應用程序/cr-gpt](https://github.com/apps/cr-gpt);
+安裝：[apps/cr-gpt](https://github.com/apps/cr-gpt);
 
 ### 配置
 
-1.  轉到要集成此機器人的回購主頁
+1.  轉到你要集成此機器人的倉庫首頁
 2.  點擊`settings`
 3.  點擊`actions`在下面`secrets and variables`
-4.  改成`Variables`選項卡，創建一個新變量`OPENAI_API_KEY`使用您打開的 api 密鑰的值<img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
+4.  切換到`Variables`選項，創建一個新變量`OPENAI_API_KEY`，值為你的open api 的key<img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
 
 ### 開始使用
 
 1.  當你創建一個新的 Pull request 時，機器人會自動進行代碼審查，審查信息將顯示在 pr timeline / file changes 部分。
-2.  後`git push`更新拉取請求，cr bot 將重新審查更改的文件
+2.  在`git push`更新PR之後，cr bot 將重新審查更改的文件
 
 例子：
 
-[ChatGPT-CodeReview/拉/21](https://github.com/anc95/ChatGPT-CodeReview/pull/21)
+[ChatGPT-CodeReview/pull/21](https://github.com/anc95/ChatGPT-CodeReview/pull/21)
 
 <img width="1052" alt="image" src="https://user-images.githubusercontent.com/13167934/218999459-812206e1-d8d2-4900-8ce8-19b5b6e1f5cb.png">
 
-### 使用 Github 動作
+### 使用 Github Action
 
 > 這是推薦的方式，因為 github bot 在一個不起眼的 vps 上服務，我不能確保它總是穩定的
 
-[動作/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
+[actions/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
 
-1.  添加`OPEN_API_KEY`到你的 github 操作秘密
-2.  創造`.github/workflows/cr.yml`添加以下內容
+1.  添加`OPEN_API_KEY`到你的 github action 密鑰
+2.  創建`.github/workflows/cr.yml`添加以下內容
 
 ```yml
 name: Code Review
@@ -58,10 +58,10 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 ```
 
-## 自託管
+## 自托管
 
 1.  克隆代碼
-2.  複製`.env.example`到`.env`, 並填寫環境變量
+2.  復製`.env.example`到`.env`, 並填寫環境變量
 3.  安裝deps並運行
 
 ```sh
@@ -85,7 +85,7 @@ npm install
 npm start
 ```
 
-### 碼頭工人
+### Docker
 
 ```sh
 # 1. Build container
@@ -101,10 +101,10 @@ docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> cr-bot
 
 有關更多信息，請查看[投稿指南](CONTRIBUTING.md).
 
-## 信用
+## 靈感
 
 這個項目的靈感來自[代碼審查.gpt](https://github.com/sturdy-dev/codereview.gpt)
 
-## 執照
+## License
 
-[國際學習中心](LICENSE)© 2023 anc95
+[ISC](LICENSE)© 2023 anc95
