@@ -32,9 +32,9 @@ export const robot = (app: Probot) => {
         repo: repo.repo,
         owner: repo.owner,
         issue_number: context.pullRequest().pull_number,
-        body: `Seems you are using me but didn't get OPENAI_API_KEY seted in Variables for this repo. you could follow [readme](https://github.com/anc95/ChatGPT-CodeReview) for more information`,
+        body: `Seems you are using me but didn't get OPENAI_API_KEY seted in Variables/Secrets for this repo. you could follow [readme](https://github.com/anc95/ChatGPT-CodeReview) for more information`,
       });
-      return null
+      return null;
     }
   };
 
@@ -114,7 +114,7 @@ export const robot = (app: Probot) => {
       }
 
       console.timeEnd('gpt cost');
-      console.info('suceess reviewed', context.payload.pull_request.html_url)
+      console.info('suceess reviewed', context.payload.pull_request.html_url);
 
       return 'success';
     }
