@@ -42,21 +42,24 @@ example:
 name: Code Review
 
 permissions:
-  contents: read
-  pull-requests: write
+    contents: read
+    pull-requests: write
 
 on:
-  pull_request:
-    types: [opened, reopened]
+    pull_request:
+        types: [opened, reopened]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: anc95/ChatGPT-CodeReview@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: anc95/ChatGPT-CodeReview@v1
+              #langauage is optional
+              with:
+                  langauge: 'english'
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 ```
 
 ## Self-hosting
@@ -64,6 +67,7 @@ jobs:
 1. clone code
 2. copy `.env.example` to `.env`, and fill the env variables
 3. install deps and run
+
 ```sh
 npm i
 npm -i g pm2
