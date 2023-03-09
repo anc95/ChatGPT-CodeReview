@@ -2,7 +2,7 @@
 
 > A code review robot powered by ChatGPT
 
-Translation Versions: [ENGLISH](./README.md) | [中文简体](./README.zh-CN.md) | [中文繁體](./README.zh-TW.md)
+Translation Versions: [ENGLISH](./README.md) | [中文简体](./README.zh-CN.md) | [中文繁體](./README.zh-TW.md) | [한국어](./README.ko.md)
 
 ## Usage
 
@@ -64,6 +64,7 @@ jobs:
 1. clone code
 2. copy `.env.example` to `.env`, and fill the env variables
 3. install deps and run
+
 ```sh
 npm i
 npm -i g pm2
