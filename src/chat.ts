@@ -21,10 +21,11 @@ export class Chat {
 
     console.time('code-review cost');
     const prompt = this.generatePrompt(patch);
+    const lang = process.env.LANGUAGE;
 
     const res = await this.chatAPI.sendMessage(prompt, {
       promptPrefix: 'hi,',
-      promptSuffix: "\nlet's start",
+      promptSuffix: `\nlet's start` + (lang ? ', Answer me in ${lang}' : ''),
     });
 
     console.timeEnd('code-review cost');
