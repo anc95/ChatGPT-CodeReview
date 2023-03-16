@@ -5,11 +5,20 @@ export class Chat {
   constructor(apikey: string) {
     this.chatAPI = new ChatGPTAPI({
       apiKey: apikey,
+      completionParams: {
+        model: process.env.MODEL || 'gpt-3.5-turbo',
+        temperature: +(process.env.temperature || 0) || 1,
+        top_p: +(process.env.temperature || 0) || 1,
+      },
     });
   }
 
   private generatePrompt = (patch: string) => {
-    return `Bellow is the code patch, please help me do a brief code review, if any bug risk and improvement suggestion are welcome
+    const answerLanguage = process.env.LANGUAGE
+      ? `,Answer me in ${process.env.LANGUAGE},`
+      : '';
+
+    return `Bellow is the code patch, please help me do a brief code review,${answerLanguage} if any bug risk and improvement suggestion are welcome
     ${patch}
     `;
   };
@@ -21,12 +30,8 @@ export class Chat {
 
     console.time('code-review cost');
     const prompt = this.generatePrompt(patch);
-    const lang = process.env.LANGUAGE;
 
-    const res = await this.chatAPI.sendMessage(prompt, {
-      promptPrefix: 'hi,',
-      promptSuffix: `\nlet's start` + (lang ? `, Answer me in ${lang}` : ''),
-    });
+    const res = await this.chatAPI.sendMessage(prompt);
 
     console.timeEnd('code-review cost');
     return res.text;
