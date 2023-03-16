@@ -57,7 +57,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # Optional
           LANGUAGE: Chinese
+          MODEL:
+          top_p: 1
+          temperature: 1
 ```
 
 ## Self-hosting
