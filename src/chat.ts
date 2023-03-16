@@ -25,7 +25,7 @@ export class Chat {
 
     const res = await this.chatAPI.sendMessage(prompt, {
       promptPrefix: 'hi,',
-      promptSuffix: `\nlet's start` + (lang ? ', Answer me in ${lang}' : ''),
+      promptSuffix: `\nlet's start` + (lang ? `, Answer me in ${lang}` : ''),
     });
 
     console.timeEnd('code-review cost');
