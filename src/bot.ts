@@ -1,4 +1,5 @@
 import { Context, Probot } from 'probot';
+
 import { Chat } from './chat.js';
 
 const OPENAI_API_KEY = 'OPENAI_API_KEY';
@@ -67,22 +68,20 @@ export const robot = (app: Probot) => {
 
       let { files: changedFiles, commits } = data.data;
 
-      if (context.payload.action === 'synchronize') {
-        if (commits.length >= 2) {
-          const {
-            data: { files },
-          } = await context.octokit.repos.compareCommits({
-            owner: repo.owner,
-            repo: repo.repo,
-            base: commits[commits.length - 2].sha,
-            head: commits[commits.length - 1].sha,
-          });
+      if (context.payload.action === 'synchronize' && commits.length >= 2) {
+        const {
+          data: { files },
+        } = await context.octokit.repos.compareCommits({
+          owner: repo.owner,
+          repo: repo.repo,
+          base: commits[commits.length - 2].sha,
+          head: commits[commits.length - 1].sha,
+        });
 
-          const filesNames = files?.map((file) => file.filename) || [];
-          changedFiles = changedFiles?.filter((file) =>
-            filesNames.includes(file.filename)
-          );
-        }
+        const filesNames = files?.map((file) => file.filename) || [];
+        changedFiles = changedFiles?.filter((file) =>
+          filesNames.includes(file.filename)
+        );
       }
 
       if (!changedFiles?.length) {
@@ -94,6 +93,10 @@ export const robot = (app: Probot) => {
       for (let i = 0; i < changedFiles.length; i++) {
         const file = changedFiles[i];
         const patch = file.patch || '';
+
+        if(file.status !== 'modified' && file.status !== 'added') {
+          continue;
+        }
 
         if (!patch || patch.length > MAX_PATCH_COUNT) {
           continue;
