@@ -6,7 +6,7 @@ Translation Versions: [ENGLISH](./README.md) | [中文简体](./README.zh-CN.md)
 
 ## Usage
 
-### Install
+## Install
 
 Install: [apps/cr-gpt](https://github.com/apps/cr-gpt);
 
