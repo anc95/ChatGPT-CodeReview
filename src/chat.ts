@@ -8,7 +8,7 @@ export class Chat {
       completionParams: {
         model: process.env.MODEL || 'gpt-3.5-turbo',
         temperature: +(process.env.temperature || 0) || 1,
-        top_p: +(process.env.temperature || 0) || 1,
+        top_p: +(process.env.top_p || 0) || 1,
       },
     });
   }
