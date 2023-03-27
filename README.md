@@ -35,7 +35,7 @@ example:
 
 [actions/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
 
-1. add the `OPEN_API_KEY` to your github actions secrets
+1. add the `OPENAI_API_KEY` to your github actions secrets
 2. create `.github/workflows/cr.yml` add bellow content
 
 ```yml

@@ -35,7 +35,7 @@ Translation Versions: [ENGLISH](./README.md) | [中文简体](./README.zh-CN.md)
 
 [actions/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
 
-1. `OPEN_API_KEY` 를 당신의 github actions secrets 에 추가합니다.
+1. `OPENAI_API_KEY` 를 당신의 github actions secrets 에 추가합니다.
 2. `.github/workflows/cr.yml` 를 생성하고, 아래의 내용을 추가합니다.
 
 ```yml
