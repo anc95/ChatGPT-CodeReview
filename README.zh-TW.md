@@ -34,7 +34,7 @@
 
 [actions/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
 
-1.  添加`OPEN_API_KEY`到你的 github action 密鑰
+1.  添加`OPENAI_API_KEY`到你的 github action 密鑰
 2.  創建`.github/workflows/cr.yml`添加以下內容
 
 ```yml
