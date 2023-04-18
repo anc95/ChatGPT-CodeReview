@@ -12,16 +12,16 @@ Install: [apps/cr-gpt](https://github.com/apps/cr-gpt);
 
 ### Configuration
 
-1. Go to the repo homepage which you want integrate this bot
-2. click `settings`
-3. click `actions` under `secrets and variables`
-4. Change to `Variables` tab, create a new variable `OPENAI_API_KEY` with the value of your open api key
+1. リポジトリのホームページに移動します
+2. `settings` をクリックします
+3. `secrets and variables` メニューの下の `actions` をクリックします
+4. `New repository variable` をクリックしてOpenAI の APIキーの登録を行います。変数名は `OPENAI_API_KEY` にしてください。変数の値にはOpenAIのAPIキーを入力します。 (OpenAIのホームページからAPIキーを取得できます。)
    <img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
 
 ### Start using
 
-1. The robot will automatically do the code review when you create a new Pull request, the review information will show in the pr timeline / file changes part.
-2. After `git push` update the pull request, cr bot will re-review the changed files
+1. このbotは新しいプルリクエストが作成されたときに自動的にコードレビューを行います。レビュー結果はプルリクエストのタイムラインやファイル変更部分に表示されます。
+2. `git push` によりプルリクエストの更新が行われたときにも自動的にコードレビューを行います。
 
 example:
 
@@ -31,12 +31,12 @@ example:
 
 ### Using Github Actions
 
-> this is a recommended way as github bot is serving on a humble vps, I can't make sure it's always stable
+> 基本的には、Github Actions での利用を推奨します。
 
 [actions/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
 
-1. add the `OPENAI_API_KEY` to your github actions secrets
-2. create `.github/workflows/cr.yml` add bellow content
+1. `OPENAI_API_KEY` を設定する
+2. 以下の例のように `.github/workflows/cr.yml` を作成する
 
 ```yml
 name: Code Review
@@ -67,9 +67,9 @@ jobs:
 
 ## Self-hosting
 
-1. clone code
-2. copy `.env.example` to `.env`, and fill the env variables
-3. install deps and run
+1. このリポジトリをクローンします
+2. `.env.example` を `.env` にリネームし、必要な環境変数を設定します
+3. 以下のコマンドを順番に実行することで依存関係をインストールし、botを起動します
 
 ```sh
 npm i
@@ -78,7 +78,7 @@ npm run build
 pm2 start pm2.config.cjs
 ```
 
-[probot](https://probot.github.io/docs/development/) for more detail
+詳細は [probot](https://probot.github.io/docs/development/) を参照してください。
 
 ## Dev
 
@@ -104,9 +104,9 @@ docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> cr-bot
 
 ## Contributing
 
-If you have suggestions for how cr-bot could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
+cr-bot の改善に関する提案やバグ報告は、issue を作成してください。どのような貢献でも歓迎します！！
 
-For more, check out the [Contributing Guide](CONTRIBUTING.md).
+より詳しい情報は [Contributing Guide](CONTRIBUTING.md) を参照してください。
 
 ## Credit
 
