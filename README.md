@@ -4,9 +4,11 @@
 
 Translation Versions: [ENGLISH](./README.md) | [中文简体](./README.zh-CN.md) | [中文繁體](./README.zh-TW.md) | [한국어](./README.ko.md) | [日本語](./README.ja.md)
 
-## Usage
+## Bot Usage
 
-## Install
+ ❗️⚠️ `Due to cost considerations, BOT is only used for testing purposes and is currently deployed on AWS Lambda with ratelimit restrictions. Therefore, unstable situations are completely normal. It is recommended to deploy an app by yourself.`
+
+### Install
 
 Install: [apps/cr-gpt](https://github.com/apps/cr-gpt);
 
@@ -15,7 +17,7 @@ Install: [apps/cr-gpt](https://github.com/apps/cr-gpt);
 1. Go to the repo homepage which you want integrate this bot
 2. click `settings`
 3. click `actions` under `secrets and variables`
-4. Change to `Variables` tab, create a new variable `OPENAI_API_KEY` with the value of your open api key
+4. Change to `Variables` tab, create a new variable `OPENAI_API_KEY` with the value of your open api key (For Github Action integration, set it in secrets)
    <img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
 
 ### Start using
@@ -29,9 +31,7 @@ example:
 
 <img width="1052" alt="image" src="https://user-images.githubusercontent.com/13167934/218999459-812206e1-d8d2-4900-8ce8-19b5b6e1f5cb.png">
 
-### Using Github Actions
-
-> this is a recommended way as github bot is serving on a humble vps, I can't make sure it's always stable
+## Using Github Actions
 
 [actions/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
 
