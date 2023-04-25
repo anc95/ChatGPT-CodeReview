@@ -6,6 +6,8 @@ Translation Versions: [ENGLISH](./README.md) | [中文简体](./README.zh-CN.md)
 
 ## Usage
 
+❗️⚠️ コストを考慮してBOTはテスト目的でのみ使用され、現在AWS Lambdaに展開されて速度制限を受けています。そのため、不安定な状況は完全に正常です。アプリケーションを直接展開することをお勧めします。
+
 ## Install
 
 Install: [apps/cr-gpt](https://github.com/apps/cr-gpt);
