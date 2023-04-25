@@ -7,3 +7,5 @@ coverage
 lib
 *.cache/**
 dist/
+lambda/
+.serverless/

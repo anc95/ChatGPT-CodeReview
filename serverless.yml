@@ -1,0 +1,26 @@
+service: cr-bot
+frameworkVersion: '3'
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  environment:
+    APP_ID: ${env:APP_ID}
+    WEBHOOK_SECRET: ${env:WEBHOOK_SECRET}
+    PRIVATE_KEY_PATH: ${env:PRIVATE_KEY_PATH}
+
+package:
+  patterns:
+    - lambda/**
+    - '!node_modules/**'
+    - '!actions/**'
+    - '!.git/**'
+
+functions:
+  webhooks:
+    handler: lambda.webhooks
+    events:
+      - httpApi:
+          path: /api/github/webhooks
+          method: post
