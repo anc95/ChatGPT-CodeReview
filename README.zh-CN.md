@@ -6,6 +6,8 @@
 
 ## 用法
 
+❗️⚠️ 鉴于成本考虑，BOT仅用于测试目的，并目前在AWS Lambda上部署并受到速率限制。因此，不稳定的情况是完全正常的。建议自己部署应用程序。
+
 ### 安装
 
 安装：[apps/cr-gpt](https://github.com/apps/cr-gpt);
