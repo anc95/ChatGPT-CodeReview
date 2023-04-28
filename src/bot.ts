@@ -59,9 +59,13 @@ export const robot = (app: Probot) => {
         return 'invalid event paylod';
       }
 
-      const target_label = process.env.TARGET_LABEL
-      if (target_label && pull_request.labels.every(label => label.name !== target_label)) {
-        return "no target label attached"
+      const target_label = process.env.TARGET_LABEL;
+      if (
+        target_label &&
+        (!pull_request.labels?.length ||
+          pull_request.labels.every((label) => label.name !== target_label))
+      ) {
+        return 'no target label attached';
       }
 
       const data = await context.octokit.repos.compareCommits({
@@ -99,7 +103,7 @@ export const robot = (app: Probot) => {
         const file = changedFiles[i];
         const patch = file.patch || '';
 
-        if(file.status !== 'modified' && file.status !== 'added') {
+        if (file.status !== 'modified' && file.status !== 'added') {
           continue;
         }
 
@@ -122,7 +126,10 @@ export const robot = (app: Probot) => {
       }
 
       console.timeEnd('gpt cost');
-      console.info('successfully reviewed', context.payload.pull_request.html_url);
+      console.info(
+        'successfully reviewed',
+        context.payload.pull_request.html_url
+      );
 
       return 'success';
     }
