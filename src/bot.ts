@@ -59,6 +59,11 @@ export const robot = (app: Probot) => {
         return 'invalid event paylod';
       }
 
+      const target_label = process.env.TARGET_LABEL
+      if (target_label && pull_request.labels.every(label => label.name !== target_label)) {
+        return "no target label attached"
+      }
+
       const data = await context.octokit.repos.compareCommits({
         owner: repo.owner,
         repo: repo.repo,
