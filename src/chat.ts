@@ -5,6 +5,7 @@ export class Chat {
   constructor(apikey: string) {
     this.chatAPI = new ChatGPTAPI({
       apiKey: apikey,
+      apiBaseUrl: process.env.OPENAI_API_ENDPOINT || 'https://api.openai.com/v1',
       completionParams: {
         model: process.env.MODEL || 'gpt-3.5-turbo',
         temperature: +(process.env.temperature || 0) || 1,
