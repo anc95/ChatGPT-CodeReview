@@ -60,6 +60,7 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           # Optional
           LANGUAGE: Chinese
+          OPENAI_API_ENDPOINT: https://api.openai.com/v1
           MODEL:
           top_p: 1
           temperature: 1
