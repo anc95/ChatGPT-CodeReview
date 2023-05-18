@@ -23,9 +23,9 @@ export const robot = (app: Probot) => {
         }
       )) as any;
 
-      if (!data?.value) {
+<!--       if (!data?.value) {
         return null;
-      }
+      } -->
 
       return new Chat(data.value);
     } catch {
