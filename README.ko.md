@@ -48,7 +48,7 @@ permissions:
 
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, reopened, synchronize]
 
 jobs:
   test:
