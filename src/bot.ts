@@ -87,7 +87,7 @@ export const robot = (app: Probot) => {
           head: commits[commits.length - 1].sha,
         });
 
-        const ignoreList = JSON.parse(process.env.ignore || '[]');
+        const ignoreList = (process.env.IGNORE || process.env.ignore || '').split('\n').filter(v => v !== '');
 
         const filesNames = files?.map((file) => file.filename) || [];
         changedFiles = changedFiles?.filter((file) =>
