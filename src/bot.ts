@@ -46,6 +46,7 @@ export const robot = (app: Probot) => {
       const chat = await loadChat(context);
 
       if (!chat) {
+        console.log('Chat initialized fialed');
         return 'no chat';
       }
 
@@ -56,6 +57,7 @@ export const robot = (app: Probot) => {
         pull_request.locked ||
         pull_request.draft
       ) {
+        console.log('invalid event paylod');
         return 'invalid event paylod';
       }
 
@@ -65,6 +67,7 @@ export const robot = (app: Probot) => {
         (!pull_request.labels?.length ||
           pull_request.labels.every((label) => label.name !== target_label))
       ) {
+        console.log('no target label attached');
         return 'no target label attached';
       }
 
@@ -96,6 +99,7 @@ export const robot = (app: Probot) => {
       }
 
       if (!changedFiles?.length) {
+        console.log('no target label attached');
         return 'no change';
       }
 
@@ -110,6 +114,9 @@ export const robot = (app: Probot) => {
         }
 
         if (!patch || patch.length > MAX_PATCH_COUNT) {
+          console.log(
+            `${file.filename} skipped caused by its diff is too large`
+          );
           continue;
         }
         const res = await chat?.codeReview(patch);
