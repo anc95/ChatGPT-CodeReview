@@ -6,7 +6,7 @@
 
 ## 用法
 
-❗️⚠️ 鉴于成本考虑，BOT仅用于测试目的，并目前在AWS Lambda上部署并受到速率限制。因此，不稳定的情况是完全正常的。建议自己部署应用程序。
+❗️⚠️ 鉴于成本考虑，BOT 仅用于测试目的，并目前在 AWS Lambda 上部署并受到速率限制。因此，不稳定的情况是完全正常的。建议自己部署应用程序。
 
 ### 安装
 
@@ -17,12 +17,12 @@
 1.  转到你要集成此机器人的仓库首页
 2.  点击`settings`
 3.  点击`actions`在下面`secrets and variables`
-4.  切换到`Variables`选项，创建一个新变量`OPENAI_API_KEY`，值为你的open api 的key<img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
+4.  切换到`Variables`选项，创建一个新变量`OPENAI_API_KEY`，值为你的 open api 的 key<img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
 
 ### 开始使用
 
 1.  当你创建一个新的 Pull request 时，机器人会自动进行代码审查，审查信息将显示在 pr timeline / file changes 部分。
-2.  在`git push`更新PR之后，cr bot 将重新审查更改的文件
+2.  在`git push`更新 PR 之后，cr bot 将重新审查更改的文件
 
 例子：
 
@@ -58,14 +58,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # optional
           LANGUAGE: Chinese
+          PROMPT:
 ```
 
 ## 自托管
 
 1.  克隆代码
 2.  复制`.env.example`到`.env`, 并填写环境变量
-3.  安装deps并运行
+3.  安装 deps 并运行
 
 ```sh
 npm i
@@ -111,4 +113,3 @@ docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> cr-bot
 ## License
 
 [ISC](LICENSE)© 2023 anc95
-

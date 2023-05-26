@@ -6,7 +6,7 @@ Translation Versions: [ENGLISH](./README.md) | [中文简体](./README.zh-CN.md)
 
 ## Bot Usage
 
- ❗️⚠️ `Due to cost considerations, BOT is only used for testing purposes and is currently deployed on AWS Lambda with ratelimit restrictions. Therefore, unstable situations are completely normal. It is recommended to deploy an app by yourself.`
+❗️⚠️ `Due to cost considerations, BOT is only used for testing purposes and is currently deployed on AWS Lambda with ratelimit restrictions. Therefore, unstable situations are completely normal. It is recommended to deploy an app by yourself.`
 
 ### Install
 
@@ -62,6 +62,7 @@ jobs:
           LANGUAGE: Chinese
           OPENAI_API_ENDPOINT: https://api.openai.com/v1
           MODEL:
+          PROMPT:
           top_p: 1
           temperature: 1
 ```

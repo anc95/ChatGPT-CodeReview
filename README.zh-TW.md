@@ -15,12 +15,12 @@
 1.  轉到你要集成此機器人的倉庫首頁
 2.  點擊`settings`
 3.  點擊`actions`在下面`secrets and variables`
-4.  切換到`Variables`選項，創建一個新變量`OPENAI_API_KEY`，值為你的open api 的key<img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
+4.  切換到`Variables`選項，創建一個新變量`OPENAI_API_KEY`，值為你的 open api 的 key<img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
 
 ### 開始使用
 
 1.  當你創建一個新的 Pull request 時，機器人會自動進行代碼審查，審查信息將顯示在 pr timeline / file changes 部分。
-2.  在`git push`更新PR之後，cr bot 將重新審查更改的文件
+2.  在`git push`更新 PR 之後，cr bot 將重新審查更改的文件
 
 例子：
 
@@ -56,13 +56,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # optional
+          PROMPT:
 ```
 
 ## 自托管
 
 1.  克隆代碼
 2.  復製`.env.example`到`.env`, 並填寫環境變量
-3.  安裝deps並運行
+3.  安裝 deps 並運行
 
 ```sh
 npm i

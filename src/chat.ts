@@ -19,7 +19,11 @@ export class Chat {
       ? `Answer me in ${process.env.LANGUAGE},`
       : '';
 
-    return `Bellow is the code patch, please help me do a brief code review,${answerLanguage} if any bug risk and improvement suggestion are welcome
+    const prompt =
+      process.env.PROMPT ||
+      'Bellow is the code patch, please help me do a brief code review, if any bug risk and improvement suggestion are welcome';
+
+    return `${prompt}, ${answerLanguage}:
     ${patch}
     `;
   };

@@ -7,6 +7,7 @@ Translation Versions: [ENGLISH](./README.md) | [中文简体](./README.zh-CN.md)
 ## 사용법
 
 ❗️⚠️비용을 고려하여 BOT은 테스트 목적으로만 사용되며, 현재 AWS Lambda에 배포되어 속도 제한을 받고 있습니다. 따라서 불안정한 상황은 완전히 정상적입니다. 응용 프로그램을 직접 배포하는 것이 좋습니다.
+
 ### 설치
 
 설치: [apps/cr-gpt](https://github.com/apps/cr-gpt);
@@ -58,7 +59,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # optional
           LANGUAGE: Korean
+          PROMPT:
 ```
 
 ## Self-hosting

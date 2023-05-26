@@ -6,7 +6,7 @@ Translation Versions: [ENGLISH](./README.md) | [中文简体](./README.zh-CN.md)
 
 ## Usage
 
-❗️⚠️ コストを考慮してBOTはテスト目的でのみ使用され、現在AWS Lambdaに展開されて速度制限を受けています。そのため、不安定な状況は完全に正常です。アプリケーションを直接展開することをお勧めします。
+❗️⚠️ コストを考慮して BOT はテスト目的でのみ使用され、現在 AWS Lambda に展開されて速度制限を受けています。そのため、不安定な状況は完全に正常です。アプリケーションを直接展開することをお勧めします。
 
 ## Install
 
@@ -17,12 +17,12 @@ Install: [apps/cr-gpt](https://github.com/apps/cr-gpt);
 1. リポジトリのホームページに移動します
 2. `settings` をクリックします
 3. `secrets and variables` メニューの下の `actions` をクリックします
-4. `New repository variable` をクリックしてOpenAI の APIキーの登録を行います。変数名は `OPENAI_API_KEY` にしてください。変数の値にはOpenAIのAPIキーを入力します。 (OpenAIのホームページからAPIキーを取得できます。)
+4. `New repository variable` をクリックして OpenAI の API キーの登録を行います。変数名は `OPENAI_API_KEY` にしてください。変数の値には OpenAI の API キーを入力します。 (OpenAI のホームページから API キーを取得できます。)
    <img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
 
 ### Start using
 
-1. このbotは新しいプルリクエストが作成されたときに自動的にコードレビューを行います。レビュー結果はプルリクエストのタイムラインやファイル変更部分に表示されます。
+1. この bot は新しいプルリクエストが作成されたときに自動的にコードレビューを行います。レビュー結果はプルリクエストのタイムラインやファイル変更部分に表示されます。
 2. `git push` によりプルリクエストの更新が行われたときにも自動的にコードレビューを行います。
 
 example:
@@ -63,6 +63,7 @@ jobs:
           # Optional
           LANGUAGE: Chinese
           MODEL:
+          PROMPT:
           top_p: 1
           temperature: 1
 ```
@@ -71,7 +72,7 @@ jobs:
 
 1. このリポジトリをクローンします
 2. `.env.example` を `.env` にリネームし、必要な環境変数を設定します
-3. 以下のコマンドを順番に実行することで依存関係をインストールし、botを起動します
+3. 以下のコマンドを順番に実行することで依存関係をインストールし、bot を起動します
 
 ```sh
 npm i
