@@ -1,0 +1,154 @@
+import csv, sys, os
+from typing import TextIO
+
+import archivo as archivo
+
+
+# !/usr/bin/python3
+class Empleado:
+    nombre = ''
+    numero = ''
+    email = ''
+    cargo = ''
+    comuna = ''
+    sueldo = 0
+
+
+# Definir un constructor que reciba los parametros
+def _init_(self, nombre, numero, email, cargo, comuna, sueldo):
+    self.nombre = nombre
+    self.numero = numero
+    self.email = email
+    self.cargo = cargo
+    self.comuna = comuna
+    self.sueldo = sueldo
+
+
+# Definir todos los setters para todos los atributos
+def setNombre(self, nombre):
+    self.nombre = nombre
+
+
+def setNumero(self, numero):
+    self.numero = numero
+
+
+def setEmail(self, email):
+    self.email = email
+
+
+def setCargo(self, cargo):
+    self.cargo = cargo
+
+
+def setComuna(self, comuna):
+    self.comuna = comuna
+
+
+def setSueldo(self, sueldo):
+    self.sueldo = sueldo
+
+
+# Definir todos los getters
+def getNombre(self):
+    return self.nombre
+
+
+def getNumero(self):
+    return self.numero
+
+
+def getEmail(self):
+    return self.email
+
+
+def getCargo(self):
+    return self.cargo
+
+
+def getComuna(self):
+    return self.comuna
+
+
+def getSueldo(self):
+    return self.sueldo
+
+
+def mostar_contactos():
+
+    archivo = open('personal.cvs', 'r')
+    with archivo:
+
+        reader = csv.reader(archivo)
+        for row in reader:
+
+            cont = 0
+            print("\n\t Rescata cada campo del registro: ")
+            for campo in row:
+                cont = cont + 1
+                if cont == 1:
+                    print(" imprime nombre : ", campo)
+                elif cont == 2:
+                    print(" imprime codigo : ", campo)
+                elif cont == 3:
+                    print(" imprime correo : ", campo)
+                elif cont == 4:
+                    print(" imprime cargo : ", campo)
+                elif cont == 5:
+                    print(" imprime comuna : ", campo)
+                elif cont == 6:
+                    print(" imprime sueldo : ", campo)
+
+    archivo.close()
+
+
+def agregar_contacto(nombre, numero, email, cargo, comuna, sueldo):
+    archivo = csv.writer(open("personal.csv", "a"))  # abre el archivo en modalidad a ==> agregar a la cola
+    archivo.writerow([nombre, numero, email, cargo, comuna, sueldo])
+
+
+archivo.close()
+
+
+def menu():
+    print("\n\t Gestion Clientes")
+    print("[1] Mostar Contactos.")
+    print("[2] Instanciar objeto empleado.")
+    print("[3] Agregar contacto al archivo.")
+    print("[4] Salir.")
+
+
+# Programa Principal ****************** Programa Principal
+# Variables
+opcion = "0"
+print("\n\n\t Manejo de Archivo de Agenda")
+if not os.path.exists("Personal.csv"):
+    archivo = csv.writer(open("Personal.csv", "w"))  # abre el archivo en modalidad w ==> escritura
+
+while (opcion != 3):
+    menu()
+    opcion = input(" Ingrese opcion : ")
+    if opcion == "1":
+        mostar_contactos()
+
+    elif opcion == "2":
+        nombre = ""
+        numero = ""
+        email = ""
+        cargo = ""
+        comuna = ""
+        sueldo = ""
+        nombre = input("==> Nombre : ")
+        numero = input("==> Numero : ")
+        email = input("==> Email : ")
+        cargo = input("==> Cargo : ")
+        comuna = input("==> Comuna : ")
+        sueldo = input("==> Sueldo : ")
+        empleado1 = Empleado()
+
+    elif opcion == "3":
+        agregar_contacto(empleado1.getNombre(), empleado1.getNumero(), empleado1.getEmail(), empleado1.getCargo,
+                         empleado1.getComuna, empleado1.getSueldo)
+
+    elif opcion == "4":
+        sys.exit()
