@@ -61,10 +61,11 @@ jobs:
           # Optional
           LANGUAGE: Chinese
           OPENAI_API_ENDPOINT: https://api.openai.com/v1
-          MODEL:
+          MODEL: gpt-turbo-3.5-0613
           PROMPT:
           top_p: 1
           temperature: 1
+          max_tokens: 10000
 ```
 
 ## Self-hosting
