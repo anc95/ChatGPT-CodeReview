@@ -66,6 +66,7 @@ jobs:
           top_p: 1
           temperature: 1
           max_tokens: 10000
+          MAX_PATCH_LENGTH: 10000 # if the patch/diff length is large than MAX_PATCH_LENGTH, will be ignored and won't review. By default, with no MAX_PATCH_LENGTH set, there is also no limit for the patch/diff length.
 ```
 
 ## Self-hosting
