@@ -61,7 +61,7 @@ jobs:
           # Optional
           LANGUAGE: Chinese
           OPENAI_API_ENDPOINT: https://api.openai.com/v1
-          MODEL: gpt-turbo-3.5-0613
+          MODEL: gpt-3.5-turbo
           PROMPT:
           top_p: 1
           temperature: 1
