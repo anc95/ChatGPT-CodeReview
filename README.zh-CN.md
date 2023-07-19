@@ -2,6 +2,10 @@
 
 > 由 ChatGPT 提供支持的代码审查机器人
 
+> 想在 Gitlab 使用？
+> 试试 https://github.com/nangongchengfeng/Chat-CodeReview.git
+
+
 翻译版本：[英语](./README.md)\|[中文简体](./README.zh-CN.md)\|[中文繁体](./README.zh-TW.md) \| [한국어](./README.ko.md) \| [日本語](./README.ja.md)
 
 ## 用法
