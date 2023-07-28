@@ -92,8 +92,11 @@ pm2 start pm2.config.cjs
 # Install dependencies
 npm install
 
+# Build code
+npm run build
+
 # Run the bot
-npm start
+npm run start
 ```
 
 ### Docker
