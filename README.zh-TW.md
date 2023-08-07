@@ -1,41 +1,42 @@
-# 代碼審查機器人
+# 程式碼審查機器人
 
-> 由 ChatGPT 提供支持的代碼審查機器人
+> 由 ChatGPT 提供支援的程式碼審查機器人
 
-翻譯版本：[英語](./README.md)\|[中文簡體](./README.zh-CN.md)\|[中文繁體](./README.zh-TW.md) \| [한국어](./README.ko.md) \| [日本語](./README.ja.md)
+翻譯版本：[English](./README.md) | [簡體中文](./README.zh-CN.md) | [繁體中文](./README.zh-TW.md) | [한국어](./README.ko.md) | [日本語](./README.ja.md)
 
-## 用法
+## 機器人使用方式
+
+❗️⚠️ `由於成本考量，BOT 目前僅用於測試目的，並部署在有限制的 AWS Lambda 上。因此，不穩定的情況是完全正常的。建議自行部署 app。`
 
 ### 安裝
 
 安裝：[apps/cr-gpt](https://github.com/apps/cr-gpt);
 
-### 配置
+### 設定
 
-1.  轉到你要集成此機器人的倉庫首頁
-2.  點擊`settings`
-3.  點擊`actions`在下面`secrets and variables`
-4.  切換到`Variables`選項，創建一個新變量`OPENAI_API_KEY`，值為你的 open api 的 key<img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
+1. 轉到你要整合此機器人的倉庫首頁
+2. 點選 `settings`
+3. 點選 `actions` 在下面的 `secrets and variables`
+4. 切換到 `Variables` 選項，建立一個新變數 `OPENAI_API_KEY`，值為你的 open api key (如果是 Github Action 整合，則設定在 secrets 中)
+   <img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
 
 ### 開始使用
 
-1.  當你創建一個新的 Pull request 時，機器人會自動進行代碼審查，審查信息將顯示在 pr timeline / file changes 部分。
-2.  在`git push`更新 PR 之後，cr bot 將重新審查更改的文件
+1. 當你建立一個新的 Pull request 時，機器人會自動進行程式碼審查，審查訊息將顯示在 pr timeline / file changes 部分。
+2. 在 `git push` 更新 Pull request 之後，cr bot 將重新審查更改的文件
 
-例子：
+範例：
 
 [ChatGPT-CodeReview/pull/21](https://github.com/anc95/ChatGPT-CodeReview/pull/21)
 
 <img width="1052" alt="image" src="https://user-images.githubusercontent.com/13167934/218999459-812206e1-d8d2-4900-8ce8-19b5b6e1f5cb.png">
 
-### 使用 Github Action
-
-> 這是推薦的方式，因為 github bot 在一個不起眼的 vps 上服務，我不能確保它總是穩定的
+## 使用 Github Actions
 
 [actions/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
 
-1.  添加`OPENAI_API_KEY`到你的 github action 密鑰
-2.  創建`.github/workflows/cr.yml`添加以下內容
+1. 新增 `OPENAI_API_KEY` 到你的 github actions secrets
+2. 建立 `.github/workflows/cr.yml` 新增以下內容
 
 ```yml
 name: Code Review
@@ -46,45 +47,56 @@ permissions:
 
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, reopened, synchronize]
 
 jobs:
   test:
+    # if: ${{ contains(github.event.*.labels.*.name, 'gpt review') }} # Optional; to run only when a label is attached
     runs-on: ubuntu-latest
     steps:
       - uses: anc95/ChatGPT-CodeReview@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          # optional
-          PROMPT:
+          # Optional
+          LANGUAGE: Chinese
+          OPENAI_API_ENDPOINT: https://api.openai.com/v1
+          MODEL: gpt-3.5-turbo # https://platform.openai.com/docs/models
+          PROMPT: # example: Please check if there are any confusions or irregularities in the following code diff:
+          top_p: 1 # https://platform.openai.com/docs/api-reference/chat/create#chat/create-top_p
+          temperature: 1 # https://platform.openai.com/docs/api-reference/chat/create#chat/create-temperature
+          max_tokens: 10000
+          MAX_PATCH_LENGTH: 10000 # if the patch/diff length is large than MAX_PATCH_LENGTH, will be ignored and won't review. By default, with no MAX_PATCH_LENGTH set, there is also no limit for the patch/diff length.
 ```
 
-## 自托管
+## 自我託管
 
-1.  克隆代碼
-2.  復製`.env.example`到`.env`, 並填寫環境變量
-3.  安裝 deps 並運行
+1. 複製程式碼
+2. 複製 `.env.example` 到 `.env`, 並填寫環境變數
+3. 安裝相依性並執行
 
 ```sh
 npm i
-npm -i g pm2
+npm i -g pm2
 npm run build
 pm2 start pm2.config.cjs
 ```
 
-[機器人](https://probot.github.io/docs/development/)了解更多詳情
+[probot](https://probot.github.io/docs/development/) 了解更多詳情
 
 ## 開發
 
-### 設置
+### 設定
 
 ```sh
 # Install dependencies
 npm install
 
+# Build code
+npm run build
+
 # Run the bot
-npm start
+npm run start
 ```
 
 ### Docker
@@ -99,13 +111,13 @@ docker run -e APP_ID=<app-id> -e PRIVATE_KEY=<pem-value> cr-bot
 
 ## 貢獻
 
-如果您對如何改進 cr-bot 有建議，或者想報告錯誤，請打開一個問題！我們會喜歡所有的貢獻。
+如果您對如何改進 cr-bot 有建議，或者想報告錯誤，請開啟一個問題！我們喜歡所有的貢獻。
 
-有關更多信息，請查看[投稿指南](CONTRIBUTING.md).
+有關更多信息，請查看[貢獻指南](CONTRIBUTING.md).
 
 ## 靈感
 
-這個項目的靈感來自[代碼審查.gpt](https://github.com/sturdy-dev/codereview.gpt)
+這個項目的靈感來自[codereview.gpt](https://github.com/sturdy-dev/codereview.gpt)
 
 ## License
 
