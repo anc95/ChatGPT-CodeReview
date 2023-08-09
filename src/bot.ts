@@ -48,7 +48,7 @@ export const robot = (app: Probot) => {
       const chat = await loadChat(context);
 
       if (!chat) {
-        console.log('Chat initialized fialed');
+        console.log('Chat initialized failed');
         return 'no chat';
       }
 
