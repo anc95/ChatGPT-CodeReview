@@ -2,7 +2,7 @@
 
 > cr bot은 ChatGPT를 활용한 코드리뷰 로봇입니다.
 
-Translation Versions: [ENGLISH](./README.md) | [中文简体](./README.zh-CN.md) | [中文繁體](./README.zh-TW.md) | [한국어](./README.ko.md) | [日本語](./README.ja.md)
+Translation Versions: [ENGLISH](./README.md) | [简体中文](./README.zh-CN.md) | [繁體中文](./README.zh-TW.md) | [한국어](./README.ko.md) | [日本語](./README.ja.md)
 
 ## 사용법
 
