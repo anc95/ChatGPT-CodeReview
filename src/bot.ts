@@ -105,7 +105,7 @@ export const robot = (app: Probot) => {
       }
 
       if (!changedFiles?.length) {
-        console.log('no target label attached');
+        console.log('no change found');
         return 'no change';
       }
 
