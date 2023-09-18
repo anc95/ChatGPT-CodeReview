@@ -56,11 +56,10 @@ export const robot = (app: Probot) => {
 
       if (
         pull_request.state === 'closed' ||
-        pull_request.locked ||
-        pull_request.draft
+        pull_request.locked
       ) {
-        console.log('invalid event paylod');
-        return 'invalid event paylod';
+        console.log('invalid event payload');
+        return 'invalid event payload';
       }
 
       const target_label = process.env.TARGET_LABEL;
