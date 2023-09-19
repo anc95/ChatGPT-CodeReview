@@ -1,4 +1,4 @@
-name: ChatGPT CodeReviewer
+name: GPTCodeReviewer
 description: 'A Code Review Action Powered By ChatGPT'
 branding:
   icon: 'gift'
