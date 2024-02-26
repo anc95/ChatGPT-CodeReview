@@ -4,5 +4,5 @@ branding:
   icon: 'gift'
   color: orange
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'action/index.cjs'
