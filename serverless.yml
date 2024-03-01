@@ -24,3 +24,7 @@ functions:
       - httpApi:
           path: /api/github/webhooks
           method: post
+    memorySize:
+      - 256
+    timeout: 30
+    logRetentionInDays: 14
