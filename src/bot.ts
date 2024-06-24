@@ -42,7 +42,7 @@ export const robot = (app: Probot) => {
   };
 
   app.on(
-    ['pull_request.opened', 'pull_request.synchronize'],
+    ['pull_request.opened', 'pull_request.synchronize', 'pull_request.labeled'],
     async (context) => {
       const repo = context.repo();
       const chat = await loadChat(context);
