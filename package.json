@@ -25,7 +25,7 @@
     "@vercel/edge": "^0.2.7",
     "chatgpt": "^5",
     "dotenv": "^16.0.3",
-    "next": "^14.1.1",
+    "next": "^14.2.13",
     "node-fetch": "^3.3.0",
     "probot": "^12.2.4"
   },
