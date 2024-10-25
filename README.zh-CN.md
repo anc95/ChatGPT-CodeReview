@@ -5,7 +5,6 @@
 > 想在 Gitlab 使用？
 > 试试 https://github.com/nangongchengfeng/Chat-CodeReview.git
 
-
 翻译版本：[英语](./README.md)\|[简体中文](./README.zh-CN.md)\|[繁體中文](./README.zh-TW.md) \| [한국어](./README.ko.md) \| [日本語](./README.ja.md)
 
 ## 用法
@@ -65,6 +64,7 @@ jobs:
           # optional
           LANGUAGE: Chinese
           PROMPT:
+          IGNORE_PATTERNS: /node_modules,*.md # Regex pattern to ignore files, separated by comma
 ```
 
 ## 自托管

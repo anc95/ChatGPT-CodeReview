@@ -66,6 +66,7 @@ jobs:
           PROMPT:
           top_p: 1
           temperature: 1
+          IGNORE_PATTERNS: /node_modules,*.md # Regex pattern to ignore files, separated by comma
 ```
 
 ## Self-hosting

@@ -62,6 +62,7 @@ jobs:
           # optional
           LANGUAGE: Korean
           PROMPT:
+          IGNORE_PATTERNS: /node_modules,*.md # Regex pattern to ignore files, separated by comma
 ```
 
 ## Self-hosting
