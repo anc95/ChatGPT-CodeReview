@@ -95,11 +95,14 @@ export const robot = (app: Probot) => {
           .split('\n')
           .filter((v) => v !== '');
 
+        const ignorePatterns = (process.env.IGNORE_PATTERNS || '').split(',')
+
         const filesNames = files?.map((file) => file.filename) || [];
         changedFiles = changedFiles?.filter(
           (file) =>
             filesNames.includes(file.filename) &&
-            !ignoreList.includes(file.filename)
+            !ignoreList.includes(file.filename) &&
+            !ignorePatterns.some(pattern => new RegExp(pattern).test(file.filename))
         );
       }
 
