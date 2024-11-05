@@ -1,20 +1,11 @@
-import { ChatGPTAPI } from 'chatgpt';
+import OpenAI from 'openai';
 export class Chat {
-  private chatAPI: ChatGPTAPI;
+  private openai: OpenAI;
 
   constructor(apikey: string) {
-    this.chatAPI = new ChatGPTAPI({
+    this.openai = new OpenAI({
       apiKey: apikey,
-      apiBaseUrl:
-        process.env.OPENAI_API_ENDPOINT || 'https://api.openai.com/v1',
-      completionParams: {
-        model: process.env.MODEL || 'gpt-3.5-turbo',
-        temperature: +(process.env.temperature || 0) || 1,
-        top_p: +(process.env.top_p || 0) || 1,
-        max_tokens: process.env.max_tokens
-          ? +process.env.max_tokens
-          : undefined,
-      },
+      baseURL: process.env.OPENAI_API_ENDPOINT || 'https://api.openai.com/v1',
     });
   }
 
@@ -40,9 +31,27 @@ export class Chat {
     console.time('code-review cost');
     const prompt = this.generatePrompt(patch);
 
-    const res = await this.chatAPI.sendMessage(prompt);
+    const res = await this.openai.chat.completions.create({
+      messages: [
+        {
+          role: "user",
+          content: prompt,
+        }
+      ],
+      model: process.env.MODEL || 'gpt-4o-mini',
+      temperature: +(process.env.temperature || 0) || 1,
+      top_p: +(process.env.top_p || 0) || 1,
+      max_tokens: process.env.max_tokens
+        ? +process.env.max_tokens
+        : undefined,
+    });
 
     console.timeEnd('code-review cost');
-    return res.text;
+
+    if (res.choices.length) {
+      return res.choices[0].message.content;
+    }
+
+    return ""
   };
 }
