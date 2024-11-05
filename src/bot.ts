@@ -1,6 +1,7 @@
 import { Context, Probot } from 'probot';
 
 import { Chat } from './chat.js';
+import log from 'loglevel';
 
 const OPENAI_API_KEY = 'OPENAI_API_KEY';
 const MAX_PATCH_COUNT = process.env.MAX_PATCH_LENGTH
@@ -48,17 +49,19 @@ export const robot = (app: Probot) => {
       const chat = await loadChat(context);
 
       if (!chat) {
-        console.log('Chat initialized failed');
+        log.info('Chat initialized failed');
         return 'no chat';
       }
 
       const pull_request = context.payload.pull_request;
 
+      log.debug('pull_request:', pull_request);
+
       if (
         pull_request.state === 'closed' ||
         pull_request.locked
       ) {
-        console.log('invalid event payload');
+        log.info('invalid event payload');
         return 'invalid event payload';
       }
 
@@ -68,7 +71,7 @@ export const robot = (app: Probot) => {
         (!pull_request.labels?.length ||
           pull_request.labels.every((label) => label.name !== target_label))
       ) {
-        console.log('no target label attached');
+        log.info('no target label attached');
         return 'no target label attached';
       }
 
@@ -80,6 +83,10 @@ export const robot = (app: Probot) => {
       });
 
       let { files: changedFiles, commits } = data.data;
+
+      log.debug("compareCommits, base:", context.payload.pull_request.base.sha, "head:", context.payload.pull_request.head.sha)
+      log.debug("compareCommits.commits:", commits)
+      log.debug("compareCommits.files", changedFiles)
 
       if (context.payload.action === 'synchronize' && commits.length >= 2) {
         const {
@@ -94,10 +101,13 @@ export const robot = (app: Probot) => {
         const ignoreList = (process.env.IGNORE || process.env.ignore || '')
           .split('\n')
           .filter((v) => v !== '');
-
         const ignorePatterns = (process.env.IGNORE_PATTERNS || '').split(',')
-
         const filesNames = files?.map((file) => file.filename) || [];
+
+        log.debug('ignoreList:', ignoreList);
+        log.debug('ignorePatterns:', ignorePatterns);
+        log.debug('filesNames:', filesNames);
+
         changedFiles = changedFiles?.filter(
           (file) =>
             filesNames.includes(file.filename) &&
@@ -107,7 +117,7 @@ export const robot = (app: Probot) => {
       }
 
       if (!changedFiles?.length) {
-        console.log('no change found');
+        log.info('no change found');
         return 'no change';
       }
 
@@ -124,7 +134,7 @@ export const robot = (app: Probot) => {
         }
 
         if (!patch || patch.length > MAX_PATCH_COUNT) {
-          console.log(
+          log.info(
             `${file.filename} skipped caused by its diff is too large`
           );
           continue;
@@ -139,7 +149,7 @@ export const robot = (app: Probot) => {
             })
           }
         } catch (e) {
-          console.error(`review ${file.filename} failed`, e);
+          log.info(`review ${file.filename} failed`, e);
         }
       }
       try {
@@ -153,11 +163,11 @@ export const robot = (app: Probot) => {
           comments: ress,
         });
       } catch (e) {
-        console.error(`Failed to create review`, e);
+        log.info(`Failed to create review`, e);
       }
 
       console.timeEnd('gpt cost');
-      console.info(
+      log.info(
         'successfully reviewed',
         context.payload.pull_request.html_url
       );

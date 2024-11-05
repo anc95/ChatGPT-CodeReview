@@ -1,1 +1,1 @@
-export {};
+import "./log.js";
