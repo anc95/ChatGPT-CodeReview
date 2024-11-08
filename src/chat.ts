@@ -1,11 +1,22 @@
 import OpenAI from 'openai';
 export class Chat {
   private openai: OpenAI;
+  private isAzure: boolean;
+  private apiVersion?: string;
+  private deployment?: string;
 
   constructor(apikey: string) {
+    this.isAzure = Boolean(process.env.AZURE_API_VERSION && process.env.AZURE_DEPLOYMENT);
+    this.apiVersion = process.env.AZURE_API_VERSION || '';
+    this.deployment = process.env.AZURE_DEPLOYMENT || '';
+    
+    const baseURL = this.isAzure
+      ? `${process.env.OPENAI_API_ENDPOINT}/openai/deployments/${this.deployment}/chat/completions?api-version=${this.apiVersion}`
+      : process.env.OPENAI_API_ENDPOINT || 'https://api.openai.com/v1';
+
     this.openai = new OpenAI({
       apiKey: apikey,
-      baseURL: process.env.OPENAI_API_ENDPOINT || 'https://api.openai.com/v1',
+      baseURL,
     });
   }
 
@@ -16,7 +27,7 @@ export class Chat {
 
     const prompt =
       process.env.PROMPT ||
-        'Below is a code patch, please help me do a brief code review on it. Any bug risks and/or improvement suggestions are welcome:';
+      'Below is a code patch, please help me do a brief code review on it. Any bug risks and/or improvement suggestions are welcome:';
 
     return `${prompt}, ${answerLanguage}:
     ${patch}
@@ -38,7 +49,8 @@ export class Chat {
           content: prompt,
         }
       ],
-      model: process.env.MODEL || 'gpt-4o-mini',
+      // Use model or deployment name based on the environment
+      model: this.isAzure ? this.deployment : process.env.MODEL || 'gpt-4',
       temperature: +(process.env.temperature || 0) || 1,
       top_p: +(process.env.top_p || 0) || 1,
       max_tokens: process.env.max_tokens
@@ -52,6 +64,6 @@ export class Chat {
       return res.choices[0].message.content;
     }
 
-    return ""
+    return "";
   };
 }
