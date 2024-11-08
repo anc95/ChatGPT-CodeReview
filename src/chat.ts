@@ -50,7 +50,7 @@ export class Chat {
         }
       ],
       // Use model or deployment name based on the environment
-      model: this.isAzure ? this.deployment : process.env.MODEL || 'gpt-4',
+      model: (this.isAzure ? this.deployment : process.env.MODEL || 'gpt-4o-mini') as any,
       temperature: +(process.env.temperature || 0) || 1,
       top_p: +(process.env.top_p || 0) || 1,
       max_tokens: process.env.max_tokens
