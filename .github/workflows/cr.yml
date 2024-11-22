@@ -16,6 +16,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          LANGUAGE: Chinese
+          LANGUAGE: English
           OPENAI_API_ENDPOINT: https://api.bianxie.ai/v1
           LOG_LEVEL: debug
