@@ -25,6 +25,7 @@
     "@vercel/edge": "^0.2.7",
     "dotenv": "^16.0.3",
     "loglevel": "^1.9.2",
+    "minimatch": "^10.0.1",
     "next": "^13.1.6",
     "node-fetch": "^3.3.0",
     "openai": "^4.71.0",
