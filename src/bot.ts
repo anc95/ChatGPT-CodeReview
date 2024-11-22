@@ -1,4 +1,5 @@
 import { Context, Probot } from 'probot';
+import { minimatch } from 'minimatch'
 
 import { Chat } from './chat.js';
 import log from 'loglevel';
@@ -98,23 +99,37 @@ export const robot = (app: Probot) => {
           head: commits[commits.length - 1].sha,
         });
 
-        const ignoreList = (process.env.IGNORE || process.env.ignore || '')
+        changedFiles = files
+      }
+
+      const ignoreList = (process.env.IGNORE || process.env.ignore || '')
           .split('\n')
           .filter((v) => v !== '');
-        const ignorePatterns = (process.env.IGNORE_PATTERNS || '').split(',').filter((v) => Boolean(v.trim()));
-        const filesNames = files?.map((file) => file.filename) || [];
+      const ignorePatterns = (process.env.IGNORE_PATTERNS || '').split(',').filter((v) => Boolean(v.trim()));
+      const includePatterns = (process.env.INCLUDE_PATTERNS || '').split(',').filter((v) => Boolean(v.trim()));
 
-        log.debug('ignoreList:', ignoreList);
-        log.debug('ignorePatterns:', ignorePatterns);
-        log.debug('filesNames:', filesNames);
+      log.debug('ignoreList:', ignoreList);
+      log.debug('ignorePatterns:', ignorePatterns);
 
-        changedFiles = changedFiles?.filter(
-          (file) =>
-            filesNames.includes(file.filename) &&
-            !ignoreList.includes(file.filename) &&
-            !ignorePatterns.some(pattern => new RegExp(pattern).test(file.filename))
-        );
-      }
+      changedFiles = changedFiles?.filter(
+        (file) => {
+          const url = new URL(file.contents_url)
+          // if includePatterns is not empty, only include files that match the pattern
+          if (includePatterns.length) {
+            return matchPatterns(includePatterns, url.pathname)
+          }
+
+          if (ignoreList.includes(file.filename)) {
+            return false;
+          }
+
+          // if ignorePatterns is not empty, ignore files that match the pattern
+          if (ignorePatterns.length) {
+            return !matchPatterns(ignorePatterns, url.pathname)
+          }
+
+          return true
+      })
 
       if (!changedFiles?.length) {
         log.info('no change found');
@@ -176,3 +191,18 @@ export const robot = (app: Probot) => {
     }
   );
 };
+
+const matchPatterns = (patterns: string[], path: string) => {
+  return patterns.some((pattern) => {
+    try {
+      return minimatch(path, pattern)
+    } catch {
+      // if the pattern is not a valid glob pattern, try to match it as a regular expression
+      try {
+        return new RegExp(pattern).test(path);
+      } catch (e) {
+        return false;
+      }
+    }
+  })
+}
