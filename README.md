@@ -67,8 +67,8 @@ jobs:
           temperature: 1 # https://platform.openai.com/docs/api-reference/chat/create#chat/create-temperature
           max_tokens: 10000
           MAX_PATCH_LENGTH: 10000 # if the patch/diff length is large than MAX_PATCH_LENGTH, will be ignored and won't review. By default, with no MAX_PATCH_LENGTH set, there is also no limit for the patch/diff length.
-          IGNORE_PATTERNS=/node_modules,*.md # glob pattern or regex pattern to ignore files, separated by comma
-          INCLUDE_PATTERNS=*.js,*.ts # glob pattern or regex pattern to include files, separated by comma
+          IGNORE_PATTERNS: /node_modules,*.md # glob pattern or regex pattern to ignore files, separated by comma
+          INCLUDE_PATTERNS: *.js,*.ts # glob pattern or regex pattern to include files, separated by comma
 
           # IF you are using azure openai
           AZURE_API_VERSION: xx
