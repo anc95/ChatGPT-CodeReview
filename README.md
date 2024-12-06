@@ -1,4 +1,7 @@
 # CodeReview BOT
+このリポジトリはクホーンしたリポジトしです。
+なのでこれから修正しますよ。
+
 
 > A code review robot powered by ChatGPT
 
