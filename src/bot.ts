@@ -44,7 +44,7 @@ export const robot = (app: Probot) => {
   };
 
   app.on(
-    ['pull_request.opened', 'pull_request.synchronize'],
+    ['pull_request.opened', 'pull_request.synchronize', 'pull_request.review_requested'],
     async (context) => {
       const repo = context.repo();
       const chat = await loadChat(context);
@@ -88,19 +88,19 @@ export const robot = (app: Probot) => {
       log.debug("compareCommits, base:", context.payload.pull_request.base.sha, "head:", context.payload.pull_request.head.sha)
       log.debug("compareCommits.commits:", commits)
       log.debug("compareCommits.files", changedFiles)
+      // Take all commits not only last diff
+      // if (context.payload.action === 'synchronize' && commits.length >= 2) {
+      //   const {
+      //     data: { files },
+      //   } = await context.octokit.repos.compareCommits({
+      //     owner: repo.owner,
+      //     repo: repo.repo,
+      //     base: commits[commits.length - 2].sha,
+      //     head: commits[commits.length - 1].sha,
+      //   });
 
-      if (context.payload.action === 'synchronize' && commits.length >= 2) {
-        const {
-          data: { files },
-        } = await context.octokit.repos.compareCommits({
-          owner: repo.owner,
-          repo: repo.repo,
-          base: commits[commits.length - 2].sha,
-          head: commits[commits.length - 1].sha,
-        });
-
-        changedFiles = files
-      }
+      //   changedFiles = files
+      // }
 
       const ignoreList = (process.env.IGNORE || process.env.ignore || '')
           .split('\n')
@@ -143,7 +143,7 @@ export const robot = (app: Probot) => {
       for (let i = 0; i < changedFiles.length; i++) {
         const file = changedFiles[i];
         const patch = file.patch || '';
-
+        // Remove from review files removed and renamed
         if (file.status !== 'modified' && file.status !== 'added') {
           continue;
         }

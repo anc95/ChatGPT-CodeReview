@@ -33,7 +33,9 @@ export class Chat {
 
     const prompt =
         process.env.PROMPT ||
-        'Below is a code patch, please help me do a brief code review on it. Any bug risks and/or improvement suggestions are welcome:';
+        'Review the pull request diff. If you find any issues, list them as bullet points with one sentence each. \
+        Do not add any extra commentary, preamble, or closing remarks. \
+        If there are no issues, output nothing. If possible use github suggestion instead comment';
 
     return `${prompt}, ${answerLanguage}:
   ${patch}
@@ -62,6 +64,13 @@ export class Chat {
     });
 
     console.timeEnd('code-review cost');
+
+    const tokensUsed = res.usage?.total_tokens || 0;
+    const ratePerToken = 0.003 / 1000; // GPT4 cost
+    //const ratePerToken = 0.0015 / 1000;  3.5-turbo
+    const cost = tokensUsed * ratePerToken;
+
+    console.log(`tokens used: ${tokensUsed}, estimated cost: $${cost}`);
 
     if (res.choices.length) {
       return res.choices[0].message.content;
