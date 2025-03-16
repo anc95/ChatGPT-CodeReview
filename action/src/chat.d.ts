@@ -3,5 +3,8 @@ export declare class Chat {
     private isAzure;
     constructor(apikey: string);
     private generatePrompt;
-    codeReview: (patch: string) => Promise<string | null>;
+    codeReview: (patch: string) => Promise<{
+        lgtm: boolean;
+        review_comment: string;
+    }>;
 }
