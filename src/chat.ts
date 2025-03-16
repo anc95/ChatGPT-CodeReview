@@ -31,18 +31,26 @@ export class Chat {
         ? `Answer me in ${process.env.LANGUAGE},`
         : '';
 
-    const prompt =
-        process.env.PROMPT ||
-        'Below is a code patch, please help me do a brief code review on it. Any bug risks and/or improvement suggestions are welcome:';
+    const userPrompt = process.env.PROMPT || 'Please review the following code patch. Focus on potential bugs, risks, and improvement suggestions.';
+    
+    const jsonFormatRequirement = '\nProvide your feedback in a strict JSON format with the following structure:\n' +
+        '{\n' +
+        '  "lgtm": boolean, // true if the code looks good to merge, false if there are concerns\n' +
+        '  "review_comment": string // Your detailed review comments. You can use markdown syntax in this string, but the overall response must be a valid JSON\n' +
+        '}\n' +
+        'Ensure your response is a valid JSON object.\n';
 
-    return `${prompt}, ${answerLanguage}:
-  ${patch}
+    return `${userPrompt}${jsonFormatRequirement} ${answerLanguage}:
+    ${patch}
     `;
   };
 
-  public codeReview = async (patch: string) => {
+  public codeReview = async (patch: string): Promise<{ lgtm: boolean, review_comment: string }> => {
     if (!patch) {
-      return '';
+      return {
+        lgtm: true,
+        review_comment: ""
+      };
     }
 
     console.time('code-review cost');
@@ -59,14 +67,28 @@ export class Chat {
       temperature: +(process.env.temperature || 0) || 1,
       top_p: +(process.env.top_p || 0) || 1,
       max_tokens: process.env.max_tokens ? +process.env.max_tokens : undefined,
+      response_format: {
+        type: "json_object"
+      },
     });
 
     console.timeEnd('code-review cost');
 
     if (res.choices.length) {
-      return res.choices[0].message.content;
+      try {
+        const json = JSON.parse(res.choices[0].message.content || "");
+        return json
+      } catch (e) {
+        return {
+          lgtm: false,
+          review_comment: res.choices[0].message.content || ""
+        }
+      }
     }
 
-    return '';
+    return {
+      lgtm: true,
+      review_comment: ""
+    }
   };
 }
