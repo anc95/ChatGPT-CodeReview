@@ -110,6 +110,7 @@ export const robot = (app: Probot) => {
 
       log.debug('ignoreList:', ignoreList);
       log.debug('ignorePatterns:', ignorePatterns);
+      log.debug('includePatterns:', includePatterns);
 
       changedFiles = changedFiles?.filter(
         (file) => {
