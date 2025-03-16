@@ -110,13 +110,15 @@ export const robot = (app: Probot) => {
 
       log.debug('ignoreList:', ignoreList);
       log.debug('ignorePatterns:', ignorePatterns);
+      log.debug('includePatterns:', includePatterns);
 
       changedFiles = changedFiles?.filter(
         (file) => {
           const url = new URL(file.contents_url)
+          const pathname = decodeURIComponent(url.pathname)
           // if includePatterns is not empty, only include files that match the pattern
           if (includePatterns.length) {
-            return matchPatterns(includePatterns, url.pathname)
+            return matchPatterns(includePatterns, pathname)
           }
 
           if (ignoreList.includes(file.filename)) {
@@ -125,7 +127,7 @@ export const robot = (app: Probot) => {
 
           // if ignorePatterns is not empty, ignore files that match the pattern
           if (ignorePatterns.length) {
-            return !matchPatterns(ignorePatterns, url.pathname)
+            return !matchPatterns(ignorePatterns, pathname)
           }
 
           return true
@@ -156,10 +158,10 @@ export const robot = (app: Probot) => {
         }
         try {
           const res = await chat?.codeReview(patch);
-          if (!!res) {
+          if (!res.lgtm && !!res.review_comment) {
             ress.push({
               path: file.filename,
-              body: res,
+              body: res.review_comment,
               position: patch.split('\n').length - 1,
             })
           }
@@ -172,7 +174,7 @@ export const robot = (app: Probot) => {
           repo: repo.repo,
           owner: repo.owner,
           pull_number: context.pullRequest().pull_number,
-          body: "Code review by ChatGPT",
+          body: ress.length ? "Code review by ChatGPT" : "LGTM 👍",
           event: 'COMMENT',
           commit_id: commits[commits.length - 1].sha,
           comments: ress,
