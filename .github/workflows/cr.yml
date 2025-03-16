@@ -19,4 +19,4 @@ jobs:
           LANGUAGE: English
           OPENAI_API_ENDPOINT: https://api.bianxie.ai/v1
           LOG_LEVEL: debug
-          INCLUDE_PATTERNS: 'src/**/*'
+          INCLUDE_PATTERNS: 'src/*'
