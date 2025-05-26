@@ -68,5 +68,12 @@
     "src/",
     "*.ts",
   ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "tests",
+    "**/*.test.*",
+    "jest.setup.ts"
+  ],
   "compileOnSave": false
 }
