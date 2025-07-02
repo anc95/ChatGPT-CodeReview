@@ -1,6 +1,6 @@
 export declare class Chat {
-    private openai;
-    private isAzure;
+    private groq;
+    private model;
     constructor(apikey: string);
     private generatePrompt;
     codeReview: (patch: string) => Promise<{

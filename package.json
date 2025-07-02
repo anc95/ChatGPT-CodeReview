@@ -16,19 +16,18 @@
   "scripts": {
     "start": "node -r dotenv/config ./dist/index.js",
     "test": "jest",
-    "build": "rm -rf dist && rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript && ncc build src/github-action.cjs -o action",
-    "build:lambda": "ncc build src/aws-lambda.cjs -o lambda"
+    "build": "rm -rf dist && rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript && ncc build src/github-action.cjs -o action"
   },
   "dependencies": {
     "@probot/adapter-aws-lambda-serverless": "^3.0.2",
     "@probot/adapter-github-actions": "^3.1.3",
     "@vercel/edge": "^0.2.7",
     "dotenv": "^16.0.3",
+    "groq-sdk": "^0.26.0",
     "loglevel": "^1.9.2",
     "minimatch": "^10.0.1",
     "next": "^13.1.6",
     "node-fetch": "^3.3.0",
-    "openai": "^4.71.0",
     "probot": "^12.2.4"
   },
   "devDependencies": {

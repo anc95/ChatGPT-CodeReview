@@ -1,15 +1,15 @@
-// You can import your modules
-// import index from '../src/index'
-
 import nock from "nock";
-// Requiring our app implementation
-import myProbotApp from "../src";
+import { robot } from "../src/bot.js";
 import { Probot, ProbotOctokit } from "probot";
 // Requiring our fixtures
 import payload from "./fixtures/issues.opened.json";
 const issueCreatedBody = { body: "Thanks for opening this issue!" };
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
+
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const privateKey = fs.readFileSync(
   path.join(__dirname, "fixtures/mock-cert.pem"),
@@ -31,7 +31,7 @@ describe("My Probot app", () => {
       }),
     });
     // Load our app into probot
-    probot.load(myProbotApp);
+    probot.load(robot);
   });
 
   test("creates a comment when an issue is opened", async () => {

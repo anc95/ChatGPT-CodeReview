@@ -1,4 +1,28 @@
-name: Code Review
+# name: Code Review
+
+# permissions:
+#   contents: read
+#   pull-requests: write
+
+# on:
+#   pull_request:
+#     types: [opened, reopened, synchronize]
+
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: aj-groq/Compound-Reviewer@main
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+#           LANGUAGE: English
+#           GROQ_API_ENDPOINT: "https://api.groq.com/openai/v1"
+#           GROQ_MODEL: "compound-beta"
+#           LOG_LEVEL: debug
+#           INCLUDE_PATTERNS: 'src/*'
+
+name: Compound-Reviewer
 
 permissions:
   contents: read
@@ -9,14 +33,27 @@ on:
     types: [opened, reopened, synchronize]
 
 jobs:
-  test:
+  code-review:
     runs-on: ubuntu-latest
     steps:
-      - uses: anc95/ChatGPT-CodeReview@main
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Build the bot
+        run: npm run build
+        
+      - name: Run code review
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           LANGUAGE: English
-          OPENAI_API_ENDPOINT: https://api.bianxie.ai/v1
-          LOG_LEVEL: debug
-          INCLUDE_PATTERNS: 'src/*'
+          GROQ_MODEL: compound-beta
+        run: node dist/index.js

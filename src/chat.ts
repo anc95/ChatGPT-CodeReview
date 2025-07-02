@@ -1,29 +1,17 @@
-import { OpenAI, AzureOpenAI } from 'openai';
+import { Groq } from 'groq-sdk';
 
+// Prepare for Groq integration
 export class Chat {
-  private openai: OpenAI | AzureOpenAI;
-  private isAzure: boolean;
+  // Placeholder for Groq client
+  private groq: any;
+  private model: string;
 
   constructor(apikey: string) {
-    this.isAzure = Boolean(
-        process.env.AZURE_API_VERSION && process.env.AZURE_DEPLOYMENT,
-    );
-
-    if (this.isAzure) {
-      // Azure OpenAI configuration
-      this.openai = new AzureOpenAI({
-        apiKey: apikey,
-        endpoint: process.env.OPENAI_API_ENDPOINT || '',
-        apiVersion: process.env.AZURE_API_VERSION || '',
-        deployment: process.env.AZURE_DEPLOYMENT || '',
-      });
-    } else {
-      // Standard OpenAI configuration
-      this.openai = new OpenAI({
-        apiKey: apikey,
-        baseURL: process.env.OPENAI_API_ENDPOINT || 'https://api.openai.com/v1',
-      });
-    }
+    this.groq = new Groq({
+      apiKey: apikey,
+      baseURL: process.env.GROQ_API_ENDPOINT || 'https://api.groq.com/openai/v1',
+    });
+    this.model = 'compound-beta';
   }
 
   private generatePrompt = (patch: string) => {
@@ -52,18 +40,15 @@ export class Chat {
         review_comment: ""
       };
     }
-
-    console.time('code-review cost');
     const prompt = this.generatePrompt(patch);
-
-    const res = await this.openai.chat.completions.create({
+    const res = await this.groq.chat.completions.create({
       messages: [
         {
           role: 'user',
           content: prompt,
         },
       ],
-      model: process.env.MODEL || 'gpt-4o-mini',
+      model: this.model,
       temperature: +(process.env.temperature || 0) || 1,
       top_p: +(process.env.top_p || 0) || 1,
       max_tokens: process.env.max_tokens ? +process.env.max_tokens : undefined,
@@ -71,24 +56,20 @@ export class Chat {
         type: "json_object"
       },
     });
-
-    console.timeEnd('code-review cost');
-
     if (res.choices.length) {
       try {
         const json = JSON.parse(res.choices[0].message.content || "");
-        return json
+        return json;
       } catch (e) {
         return {
           lgtm: false,
           review_comment: res.choices[0].message.content || ""
-        }
+        };
       }
     }
-
     return {
       lgtm: true,
       review_comment: ""
-    }
+    };
   };
 }

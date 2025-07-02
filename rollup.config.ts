@@ -1,7 +1,10 @@
-import esbuild from 'rollup-plugin-esbuild';
 import { defineConfig } from 'rollup';
-import commonjs from '@rollup/plugin-commonjs';
-import nodeResolve from '@rollup/plugin-node-resolve';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+const esbuild = require('rollup-plugin-esbuild').default;
+const commonjs = require('@rollup/plugin-commonjs');
+const { nodeResolve } = require('@rollup/plugin-node-resolve');
 
 export default defineConfig([
   {

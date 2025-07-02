@@ -1,6 +1,6 @@
 # CodeReview BOT
 
-> A code review robot powered by ChatGPT
+> A code review robot powered by Groq's Compound Beta model
 
 Translation Versions: [ENGLISH](./README.md) | [简体中文](./README.zh-CN.md) | [繁體中文](./README.zh-TW.md) | [한국어](./README.ko.md) | [日本語](./README.ja.md)
 
@@ -17,7 +17,7 @@ Install: [apps/cr-gpt](https://github.com/apps/cr-gpt);
 1. Go to the repo homepage which you want integrate this bot
 2. click `settings`
 3. click `actions` under `secrets and variables`
-4. Change to `Variables` tab, create a new variable `OPENAI_API_KEY` with the value of your open api key (For Github Action integration, set it in secrets)
+4. Change to `Variables` tab, create a new variable `GROQ_API_KEY` with the value of your Groq API key (For Github Action integration, set it in secrets)
    <img width="1465" alt="image" src="https://user-images.githubusercontent.com/13167934/218533628-3974b70f-c423-44b0-b096-d1ec2ace85ea.png">
 
 ### Start using
@@ -35,7 +35,7 @@ example:
 
 [actions/chatgpt-codereviewer](https://github.com/marketplace/actions/chatgpt-codereviewer)
 
-1. add the `OPENAI_API_KEY` to your github actions secrets
+1. add the `GROQ_API_KEY` to your github actions secrets
 2. create `.github/workflows/cr.yml` add bellow content
 
 ```yml
@@ -54,25 +54,22 @@ jobs:
     # if: ${{ contains(github.event.*.labels.*.name, 'gpt review') }} # Optional; to run only when a label is attached
     runs-on: ubuntu-latest
     steps:
-      - uses: anc95/ChatGPT-CodeReview@main
+      - uses: aj-groq/Compound-Reviewer@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           # Optional
           LANGUAGE: Chinese
-          OPENAI_API_ENDPOINT: https://api.openai.com/v1
-          MODEL: gpt-3.5-turbo # https://platform.openai.com/docs/models
+          GROQ_API_ENDPOINT: https://api.groq.com/openai/v1
+          GROQ_MODEL: compound-beta # Default is 'compound-beta', can be changed to any available Groq model
           PROMPT: # example: Please check if there are any confusions or irregularities in the following code diff:
-          top_p: 1 # https://platform.openai.com/docs/api-reference/chat/create#chat/create-top_p
-          temperature: 1 # https://platform.openai.com/docs/api-reference/chat/create#chat/create-temperature
+          top_p: 1
+          temperature: 1
           max_tokens: 10000
-          MAX_PATCH_LENGTH: 10000 # if the patch/diff length is large than MAX_PATCH_LENGTH, will be ignored and won't review. By default, with no MAX_PATCH_LENGTH set, there is also no limit for the patch/diff length.
-          IGNORE_PATTERNS: /node_modules/**/*,*.md # glob pattern or regex pattern to ignore files, separated by comma
-          INCLUDE_PATTERNS: *.js,*.ts # glob pattern or regex pattern to include files, separated by comma
+          MAX_PATCH_LENGTH: 10000
+          IGNORE_PATTERNS: /node_modules/**/*,*.md
+          INCLUDE_PATTERNS: *.js,*.ts
 
-          # IF you are using azure openai
-          AZURE_API_VERSION: xx
-          AZURE_DEPLOYMENT: xx
 ```
 
 ## Self-hosting
@@ -87,6 +84,8 @@ npm i -g pm2
 npm run build
 pm2 start pm2.config.cjs
 ```
+
+**Note:** This bot is now powered by Groq and uses the `compound-beta` model by default.
 
 [probot](https://probot.github.io/docs/development/) for more detail
 
