@@ -57,11 +57,22 @@ jobs:
       - uses: anc95/ChatGPT-CodeReview@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          # if use github models https://github.com/marketplace/models
+          USE_GITHUB_MODELS: true
+          MODEL: openai/gpt-4o
+
+          # else if use azure deployment
+          AZURE_API_VERSION: xx
+          AZURE_DEPLOYMENT: xx
+
+          # else use standard llm model
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          # Optional
-          LANGUAGE: Chinese
           OPENAI_API_ENDPOINT: https://api.openai.com/v1
           MODEL: gpt-3.5-turbo # https://platform.openai.com/docs/models
+
+          # common
+          LANGUAGE: Chinese
           PROMPT: # example: Please check if there are any confusions or irregularities in the following code diff:
           top_p: 1 # https://platform.openai.com/docs/api-reference/chat/create#chat/create-top_p
           temperature: 1 # https://platform.openai.com/docs/api-reference/chat/create#chat/create-temperature
@@ -69,10 +80,6 @@ jobs:
           MAX_PATCH_LENGTH: 10000 # if the patch/diff length is large than MAX_PATCH_LENGTH, will be ignored and won't review. By default, with no MAX_PATCH_LENGTH set, there is also no limit for the patch/diff length.
           IGNORE_PATTERNS: /node_modules/**/*,*.md # glob pattern or regex pattern to ignore files, separated by comma
           INCLUDE_PATTERNS: *.js,*.ts # glob pattern or regex pattern to include files, separated by comma
-
-          # IF you are using azure openai
-          AZURE_API_VERSION: xx
-          AZURE_DEPLOYMENT: xx
 ```
 
 ## Self-hosting
