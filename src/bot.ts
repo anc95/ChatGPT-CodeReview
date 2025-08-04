@@ -11,6 +11,10 @@ const MAX_PATCH_COUNT = process.env.MAX_PATCH_LENGTH
 
 export const robot = (app: Probot) => {
   const loadChat = async (context: Context) => {
+    if (process.env.USE_GITHUB_MODELS === 'true' && process.env.GITHUB_TOKEN) {
+      return new Chat(process.env.GITHUB_TOKEN);
+    }
+
     if (process.env.OPENAI_API_KEY) {
       return new Chat(process.env.OPENAI_API_KEY);
     }

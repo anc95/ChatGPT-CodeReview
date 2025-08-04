@@ -3,11 +3,14 @@ import { OpenAI, AzureOpenAI } from 'openai';
 export class Chat {
   private openai: OpenAI | AzureOpenAI;
   private isAzure: boolean;
+  private isGithubModels: boolean;
 
   constructor(apikey: string) {
     this.isAzure = Boolean(
         process.env.AZURE_API_VERSION && process.env.AZURE_DEPLOYMENT,
     );
+
+    this.isGithubModels = process.env.USE_GITHUB_MODELS === 'true';
 
     if (this.isAzure) {
       // Azure OpenAI configuration
@@ -21,7 +24,7 @@ export class Chat {
       // Standard OpenAI configuration
       this.openai = new OpenAI({
         apiKey: apikey,
-        baseURL: process.env.OPENAI_API_ENDPOINT || 'https://api.openai.com/v1',
+        baseURL: this.isGithubModels ? 'https://models.github.ai/inference' : process.env.OPENAI_API_ENDPOINT || 'https://api.openai.com/v1',
       });
     }
   }
@@ -63,7 +66,7 @@ export class Chat {
           content: prompt,
         },
       ],
-      model: process.env.MODEL || 'gpt-4o-mini',
+      model: process.env.MODEL || (this.isGithubModels ? 'openai/gpt-4o-mini' : 'gpt-4o-mini'),
       temperature: +(process.env.temperature || 0) || 1,
       top_p: +(process.env.top_p || 0) || 1,
       max_tokens: process.env.max_tokens ? +process.env.max_tokens : undefined,

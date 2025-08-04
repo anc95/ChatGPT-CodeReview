@@ -12,11 +12,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: anc95/ChatGPT-CodeReview@main
+      - uses: anc95/ChatGPT-CodeReview@chao
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LANGUAGE: English
-          OPENAI_API_ENDPOINT: https://api.bianxie.ai/v1
+          USE_GITHUB_MODELS: true
           LOG_LEVEL: debug
           INCLUDE_PATTERNS: 'src/*'
