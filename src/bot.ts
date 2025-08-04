@@ -171,6 +171,7 @@ export const robot = (app: Probot) => {
           }
         } catch (e) {
           log.info(`review ${file.filename} failed`, e);
+          throw e;
         }
       }
       try {
@@ -185,6 +186,7 @@ export const robot = (app: Probot) => {
         });
       } catch (e) {
         log.info(`Failed to create review`, e);
+        throw e;
       }
 
       console.timeEnd('gpt cost');

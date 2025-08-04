@@ -19,4 +19,4 @@ jobs:
           LANGUAGE: English
           USE_GITHUB_MODELS: true
           LOG_LEVEL: debug
-          INCLUDE_PATTERNS: 'src/*'
+          INCLUDE_PATTERNS: src/*,.github/**/*
