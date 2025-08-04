@@ -44,6 +44,7 @@ name: Code Review
 permissions:
   contents: read
   pull-requests: write
+  models: true # if you choose use github models, set this to be true
 
 on:
   pull_request:
