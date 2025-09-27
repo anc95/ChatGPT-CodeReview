@@ -179,7 +179,7 @@ export const robot = (app: Probot) => {
           repo: repo.repo,
           owner: repo.owner,
           pull_number: context.pullRequest().pull_number,
-          body: ress.length ? "Code review by ChatGPT" : "LGTM 👍",
+          body: ress.length ? "Code review summary" : "LGTM 👍",
           event: 'COMMENT',
           commit_id: commits[commits.length - 1].sha,
           comments: ress,
