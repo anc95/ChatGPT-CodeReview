@@ -1,6 +1,6 @@
 # CodeReview BOT
 
-> A code review robot powered by ChatGPT
+> A code review robot powered by TestPilot App
 
 Translation Versions: [ENGLISH](./README.md) | [简体中文](./README.zh-CN.md) | [繁體中文](./README.zh-TW.md) | [한국어](./README.ko.md) | [日本語](./README.ja.md)
 
