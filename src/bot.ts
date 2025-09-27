@@ -9,7 +9,66 @@ const MAX_PATCH_COUNT = process.env.MAX_PATCH_LENGTH
   ? +process.env.MAX_PATCH_LENGTH
   : Infinity;
 
+const semgrepWorkflowContent = `name: Static Code Analysis
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  semgrep:
+    runs-on: ubuntu-latest
+    name: Semgrep Analysis
+    steps:
+      - uses: actions/checkout@v4
+      - uses: semgrep/semgrep-action@v1
+        with:
+          config: >-
+            p/security-audit
+            p/secrets
+            p/owasp-top-ten
+        env:
+          SEMGREP_APP_TOKEN: \${{ secrets.SEMGREP_APP_TOKEN }}
+`;
+
 export const robot = (app: Probot) => {
+  // Auto-install Semgrep workflow on app installation
+  app.on(['installation.created', 'installation_repositories.added'], async (context) => {
+    const repositories = context.payload.repositories || [context.payload.repository];
+
+    for (const repo of repositories) {
+      if (!repo) continue;
+
+      try {
+        // Check if workflow already exists
+        let existingWorkflow;
+        try {
+          existingWorkflow = await context.octokit.repos.getContent({
+            owner: repo.owner?.login || context.payload.installation.account.login,
+            repo: repo.name,
+            path: '.github/workflows/semgrep.yml',
+          });
+        } catch (e) {
+          // File doesn't exist, we'll create it
+        }
+
+        if (!existingWorkflow) {
+          await context.octokit.repos.createOrUpdateFileContents({
+            owner: repo.owner?.login || context.payload.installation.account.login,
+            repo: repo.name,
+            path: '.github/workflows/semgrep.yml',
+            message: 'Add Semgrep static analysis workflow',
+            content: Buffer.from(semgrepWorkflowContent).toString('base64'),
+          });
+
+          log.info(`Added Semgrep workflow to ${repo.name}`);
+        }
+      } catch (error) {
+        log.error(`Failed to add Semgrep workflow to ${repo.name}:`, error);
+      }
+    }
+  });
+
   const loadChat = async (context: Context) => {
     if (process.env.USE_GITHUB_MODELS === 'true' && process.env.GITHUB_TOKEN) {
       return new Chat(process.env.GITHUB_TOKEN);
