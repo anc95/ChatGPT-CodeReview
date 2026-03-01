@@ -87,7 +87,7 @@ export const robot = (app: Probot) => {
         head: context.payload.pull_request.head.sha,
       });
 
-      let { files: changedFiles, commits } = data.data;
+      let { files: changedFiles } = data.data;
 
       if (context.payload.action === 'synchronize') {
         // Try to detect the last commit we reviewed (by looking for our previous review)
@@ -107,7 +107,7 @@ export const robot = (app: Probot) => {
 
           if (botReview?.commit_id) {
             const {
-              data: { files, commits: newCommits },
+              data: { files },
             } = await context.octokit.repos.compareCommits({
               owner: repo.owner,
               repo: repo.repo,
@@ -116,30 +116,30 @@ export const robot = (app: Probot) => {
             });
 
             changedFiles = files;
-            commits = newCommits;
-          } else if (commits.length >= 2) {
-            // fallback: compare last two commits in the PR
+          } else if (context.payload.before) {
+            // Use the 'before' SHA from the synchronize event to capture
+            // all commits in the push, not just the last one.
             const {
               data: { files },
             } = await context.octokit.repos.compareCommits({
               owner: repo.owner,
               repo: repo.repo,
-              base: commits[commits.length - 2].sha,
-              head: commits[commits.length - 1].sha,
+              base: context.payload.before,
+              head: context.payload.pull_request.head.sha,
             });
 
             changedFiles = files;
           }
         } catch (err) {
           log.debug('failed to detect previous bot review, falling back', err);
-          if (commits.length >= 2) {
+          if (context.payload.before) {
             const {
               data: { files },
             } = await context.octokit.repos.compareCommits({
               owner: repo.owner,
               repo: repo.repo,
-              base: commits[commits.length - 2].sha,
-              head: commits[commits.length - 1].sha,
+              base: context.payload.before,
+              head: context.payload.pull_request.head.sha,
             });
 
             changedFiles = files;
