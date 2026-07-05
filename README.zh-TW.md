@@ -66,6 +66,7 @@ jobs:
           top_p: 1 # https://platform.openai.com/docs/api-reference/chat/create#chat/create-top_p
           temperature: 1 # https://platform.openai.com/docs/api-reference/chat/create#chat/create-temperature
           max_tokens: 10000
+          # REASONING_EFFORT: low # optional; only for reasoning models (e.g. gpt-5.4, gpt-5.5), values (model support varies): none, minimal, low, medium, high, xhigh
           MAX_PATCH_LENGTH: 10000 # if the patch/diff length is large than MAX_PATCH_LENGTH, will be ignored and won't review. By default, with no MAX_PATCH_LENGTH set, there is also no limit for the patch/diff length.
           IGNORE_PATTERNS: /node_modules,*.md # Regex pattern to ignore files, separated by comma
 ```

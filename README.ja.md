@@ -66,6 +66,7 @@ jobs:
           PROMPT:
           top_p: 1
           temperature: 1
+          # REASONING_EFFORT: low # optional; only for reasoning models (e.g. gpt-5.4, gpt-5.5), values (model support varies): none, minimal, low, medium, high, xhigh
           IGNORE_PATTERNS: /node_modules,*.md # Regex pattern to ignore files, separated by comma
 ```
 
