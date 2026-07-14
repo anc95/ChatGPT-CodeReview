@@ -8,6 +8,12 @@ const OPENAI_API_KEY = 'OPENAI_API_KEY';
 const MAX_PATCH_COUNT = process.env.MAX_PATCH_LENGTH
   ? +process.env.MAX_PATCH_LENGTH
   : Infinity;
+const REVIEW_BATCH_SIZE = process.env.REVIEW_BATCH_SIZE
+  ? +process.env.REVIEW_BATCH_SIZE
+  : 40;
+const REVIEW_BATCH_DELAY_MS = process.env.REVIEW_BATCH_DELAY_MS
+  ? +process.env.REVIEW_BATCH_DELAY_MS
+  : 5000;
 
 export const robot = (app: Probot) => {
   const loadChat = async (context: Context) => {
@@ -241,15 +247,39 @@ export const robot = (app: Probot) => {
         }
       }
       try {
-        await context.octokit.pulls.createReview({
-          repo: repo.repo,
-          owner: repo.owner,
-          pull_number: context.pullRequest().pull_number,
-          body: ress.length ? "Code review by ChatGPT" : "LGTM 👍",
-          event: 'COMMENT',
-          commit_id: context.payload.pull_request.head.sha,
-          comments: ress,
-        });
+        if (ress.length <= REVIEW_BATCH_SIZE) {
+          await context.octokit.pulls.createReview({
+            repo: repo.repo,
+            owner: repo.owner,
+            pull_number: context.pullRequest().pull_number,
+            body: ress.length ? "Code review by ChatGPT" : "LGTM 👍",
+            event: 'COMMENT',
+            commit_id: context.payload.pull_request.head.sha,
+            comments: ress,
+          });
+        } else {
+          // Submit comments in batches to avoid GitHub secondary rate limits
+          for (let i = 0; i < ress.length; i += REVIEW_BATCH_SIZE) {
+            const batch = ress.slice(i, i + REVIEW_BATCH_SIZE);
+            const isFirst = i === 0;
+            const isLast = i + REVIEW_BATCH_SIZE >= ress.length;
+
+            await context.octokit.pulls.createReview({
+              repo: repo.repo,
+              owner: repo.owner,
+              pull_number: context.pullRequest().pull_number,
+              body: isFirst ? "Code review by ChatGPT" : "",
+              event: 'COMMENT',
+              commit_id: context.payload.pull_request.head.sha,
+              comments: batch,
+            });
+
+            if (!isLast) {
+              log.info(`Submitted batch ${Math.floor(i / REVIEW_BATCH_SIZE) + 1}, waiting before next batch...`);
+              await new Promise((resolve) => setTimeout(resolve, REVIEW_BATCH_DELAY_MS));
+            }
+          }
+        }
       } catch (e) {
         log.info(`Failed to create review`, e);
         throw e;
