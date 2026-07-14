@@ -1,9 +1,19 @@
 import { OpenAI, AzureOpenAI } from 'openai';
 
+const reasoningEfforts = ['none', 'minimal', 'low', 'medium', 'high', 'xhigh'] as const;
+
+type ReasoningEffort = typeof reasoningEfforts[number];
+
+const isReasoningEffort = (effort: string): effort is ReasoningEffort =>
+  (reasoningEfforts as readonly string[]).includes(effort);
+
 export class Chat {
   private openai: OpenAI | AzureOpenAI;
   private isAzure: boolean;
   private isGithubModels: boolean;
+
+  private reasoningModels = ['o1', 'o1-2024-12-17', 'o1-mini', 'o1-mini-2024-09-12'];
+  private reasoningPrefixes = ['o3', 'o4', 'gpt-5'];
 
   constructor(apikey: string) {
     this.isAzure = Boolean(
@@ -27,6 +37,29 @@ export class Chat {
         baseURL: this.isGithubModels ? 'https://models.github.ai/inference' : process.env.OPENAI_API_ENDPOINT || 'https://api.openai.com/v1',
       });
     }
+  }
+
+  private get model(): string {
+    return process.env.MODEL || (this.isGithubModels ? 'openai/gpt-4o-mini' : 'gpt-4o-mini');
+  }
+
+  private get normalizedModel(): string {
+    return this.model.split('/').pop() || this.model;
+  }
+
+  private get isReasoningModel(): boolean {
+    const model = this.normalizedModel.toLowerCase();
+    return this.reasoningModels.includes(model) || this.reasoningPrefixes.some(prefix => model.startsWith(prefix));
+  }
+
+  private get reasoningEffortOption(): { reasoning_effort?: ReasoningEffort } {
+    const effort = process.env.REASONING_EFFORT;
+    if (!effort || !this.isReasoningModel) return {};
+    if (!isReasoningEffort(effort)) {
+      console.warn(`REASONING_EFFORT="${effort}" is invalid, ignoring. Valid values: ${reasoningEfforts.join(', ')}`);
+      return {};
+    }
+    return { reasoning_effort: effort };
   }
 
   private generatePrompt = (patch: string) => {
@@ -65,6 +98,8 @@ export class Chat {
     console.time('code-review cost');
     const prompt = this.generatePrompt(patch);
 
+    const isReasoning = this.isReasoningModel;
+
     const res = await this.openai.chat.completions.create({
       messages: [
         {
@@ -72,13 +107,14 @@ export class Chat {
           content: prompt,
         },
       ],
-      model: process.env.MODEL || (this.isGithubModels ? 'openai/gpt-4o-mini' : 'gpt-4o-mini'),
-      temperature: +(process.env.temperature || 0) || 1,
-      top_p: +(process.env.top_p || 0) || 1,
+      model: this.model,
+      ...(isReasoning ? {} : {
+        temperature: +(process.env.temperature || 0) || 1,
+        top_p: +(process.env.top_p || 0) || 1,
+      }),
       max_tokens: process.env.max_tokens ? +process.env.max_tokens : undefined,
-      response_format: {
-        type: "json_object"
-      },
+      ...this.reasoningEffortOption,
+      response_format: { type: "json_object" },
     });
 
     console.timeEnd('code-review cost');
