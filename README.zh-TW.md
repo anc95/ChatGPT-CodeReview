@@ -58,6 +58,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # 或使用 OrcaRouter 閘道(OpenAI 相容模型路由) https://www.orcarouter.ai
+          # USE_ORCAROUTER: true
+          # ORCAROUTER_API_KEY: ${{ secrets.ORCAROUTER_API_KEY }}
+          # MODEL: orcarouter/auto # 未設定時預設為 orcarouter/auto
           # Optional
           LANGUAGE: Chinese
           OPENAI_API_ENDPOINT: https://api.openai.com/v1

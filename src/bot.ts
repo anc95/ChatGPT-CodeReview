@@ -5,6 +5,7 @@ import { Chat } from './chat.js';
 import log from 'loglevel';
 
 const OPENAI_API_KEY = 'OPENAI_API_KEY';
+const ORCAROUTER_API_KEY = 'ORCAROUTER_API_KEY';
 const COMPARE_FILES_LIMIT = 300;
 const REVIEW_MARKER = '<!-- chatgpt-code-review -->';
 const MAX_PATCH_COUNT = process.env.MAX_PATCH_LENGTH
@@ -234,6 +235,10 @@ export const robot = (app: Probot) => {
   }
 
   const loadChat = async (context: Context) => {
+    if (process.env.USE_ORCAROUTER === 'true' && process.env[ORCAROUTER_API_KEY]) {
+      return new Chat(process.env[ORCAROUTER_API_KEY]);
+    }
+
     if (process.env.USE_GITHUB_MODELS === 'true' && process.env.GITHUB_TOKEN) {
       return new Chat(process.env.GITHUB_TOKEN);
     }

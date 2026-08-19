@@ -147032,6 +147032,7 @@ const minimatch_1 = __nccwpck_require__(4501);
 const chat_js_1 = __nccwpck_require__(85365);
 const loglevel_1 = __importDefault(__nccwpck_require__(78063));
 const OPENAI_API_KEY = 'OPENAI_API_KEY';
+const ORCAROUTER_API_KEY = 'ORCAROUTER_API_KEY';
 const COMPARE_FILES_LIMIT = 300;
 const REVIEW_MARKER = '<!-- chatgpt-code-review -->';
 const MAX_PATCH_COUNT = process.env.MAX_PATCH_LENGTH
@@ -147198,6 +147199,9 @@ const robot = (app) => {
         });
     }
     const loadChat = async (context) => {
+        if (process.env.USE_ORCAROUTER === 'true' && process.env[ORCAROUTER_API_KEY]) {
+            return new chat_js_1.Chat(process.env[ORCAROUTER_API_KEY]);
+        }
         if (process.env.USE_GITHUB_MODELS === 'true' && process.env.GITHUB_TOKEN) {
             return new chat_js_1.Chat(process.env.GITHUB_TOKEN);
         }
@@ -147368,11 +147372,13 @@ class Chat {
     openai;
     isAzure;
     isGithubModels;
+    isOrcaRouter;
     reasoningModels = ['o1', 'o1-2024-12-17', 'o1-mini', 'o1-mini-2024-09-12'];
     reasoningPrefixes = ['o3', 'o4', 'gpt-5'];
     constructor(apikey) {
         this.isAzure = Boolean(process.env.AZURE_API_VERSION && process.env.AZURE_DEPLOYMENT);
         this.isGithubModels = process.env.USE_GITHUB_MODELS === 'true';
+        this.isOrcaRouter = process.env.USE_ORCAROUTER === 'true';
         if (this.isAzure) {
             // Azure OpenAI configuration
             this.openai = new openai_1.AzureOpenAI({
@@ -147386,12 +147392,16 @@ class Chat {
             // Standard OpenAI configuration
             this.openai = new openai_1.OpenAI({
                 apiKey: apikey,
-                baseURL: this.isGithubModels ? 'https://models.github.ai/inference' : process.env.OPENAI_API_ENDPOINT || 'https://api.openai.com/v1',
+                baseURL: this.isGithubModels
+                    ? 'https://models.github.ai/inference'
+                    : this.isOrcaRouter
+                        ? 'https://api.orcarouter.ai/v1'
+                        : process.env.OPENAI_API_ENDPOINT || 'https://api.openai.com/v1',
             });
         }
     }
     get model() {
-        return process.env.MODEL || (this.isGithubModels ? 'openai/gpt-4o-mini' : 'gpt-4o-mini');
+        return process.env.MODEL || (this.isGithubModels ? 'openai/gpt-4o-mini' : this.isOrcaRouter ? 'orcarouter/auto' : 'gpt-4o-mini');
     }
     get normalizedModel() {
         return this.model.split('/').pop() || this.model;

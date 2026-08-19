@@ -72,6 +72,11 @@ jobs:
           OPENAI_API_ENDPOINT: https://api.openai.com/v1
           MODEL: gpt-3.5-turbo # https://platform.openai.com/docs/models
 
+          # else use the OrcaRouter gateway (OpenAI-compatible model router) https://www.orcarouter.ai
+          # USE_ORCAROUTER: true
+          # ORCAROUTER_API_KEY: ${{ secrets.ORCAROUTER_API_KEY }}
+          # MODEL: orcarouter/auto # defaults to orcarouter/auto when unset
+
           # common
           LANGUAGE: Chinese
           PROMPT: # example: Please check if there are any confusions or irregularities in the following code diff:
