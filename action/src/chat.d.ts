@@ -2,6 +2,7 @@ export declare class Chat {
     private openai;
     private isAzure;
     private isGithubModels;
+    private isOrcaRouter;
     private reasoningModels;
     private reasoningPrefixes;
     constructor(apikey: string);

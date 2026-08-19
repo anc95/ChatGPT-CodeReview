@@ -59,6 +59,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # 또는 OrcaRouter 게이트웨이 사용(OpenAI 호환 모델 라우터) https://www.orcarouter.ai
+          # USE_ORCAROUTER: true
+          # ORCAROUTER_API_KEY: ${{ secrets.ORCAROUTER_API_KEY }}
+          # MODEL: orcarouter/auto # 미설정 시 orcarouter/auto 기본값
           # optional
           LANGUAGE: Korean
           # REASONING_EFFORT: low # optional; only for reasoning models (e.g. gpt-5.4, gpt-5.5), values (model support varies): none, minimal, low, medium, high, xhigh

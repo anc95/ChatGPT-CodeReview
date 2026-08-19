@@ -249,4 +249,28 @@ describe("Chat", () => {
       })
     );
   });
+
+  test("uses the OrcaRouter gateway endpoint when USE_ORCAROUTER is true", async () => {
+    process.env.USE_ORCAROUTER = "true";
+
+    new Chat("test-key");
+
+    expect(OpenAI).toHaveBeenCalledWith(
+      expect.objectContaining({
+        baseURL: "https://api.orcarouter.ai/v1",
+      })
+    );
+  });
+
+  test("defaults to orcarouter/auto model when USE_ORCAROUTER is true and MODEL is not set", async () => {
+    process.env.USE_ORCAROUTER = "true";
+    delete process.env.MODEL;
+
+    const chat = new Chat("test-key");
+    await chat.codeReview("@@ -1,3 +1,4 @@\n+new line\n old line");
+
+    expect(mockCreate).toHaveBeenCalledWith(
+      expect.objectContaining({ model: "orcarouter/auto" })
+    );
+  });
 });

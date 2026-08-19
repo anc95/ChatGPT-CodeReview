@@ -11,6 +11,7 @@ export class Chat {
   private openai: OpenAI | AzureOpenAI;
   private isAzure: boolean;
   private isGithubModels: boolean;
+  private isOrcaRouter: boolean;
 
   private reasoningModels = ['o1', 'o1-2024-12-17', 'o1-mini', 'o1-mini-2024-09-12'];
   private reasoningPrefixes = ['o3', 'o4', 'gpt-5'];
@@ -21,6 +22,7 @@ export class Chat {
     );
 
     this.isGithubModels = process.env.USE_GITHUB_MODELS === 'true';
+    this.isOrcaRouter = process.env.USE_ORCAROUTER === 'true';
 
     if (this.isAzure) {
       // Azure OpenAI configuration
@@ -34,13 +36,17 @@ export class Chat {
       // Standard OpenAI configuration
       this.openai = new OpenAI({
         apiKey: apikey,
-        baseURL: this.isGithubModels ? 'https://models.github.ai/inference' : process.env.OPENAI_API_ENDPOINT || 'https://api.openai.com/v1',
+        baseURL: this.isGithubModels
+          ? 'https://models.github.ai/inference'
+          : this.isOrcaRouter
+            ? 'https://api.orcarouter.ai/v1'
+            : process.env.OPENAI_API_ENDPOINT || 'https://api.openai.com/v1',
       });
     }
   }
 
   private get model(): string {
-    return process.env.MODEL || (this.isGithubModels ? 'openai/gpt-4o-mini' : 'gpt-4o-mini');
+    return process.env.MODEL || (this.isGithubModels ? 'openai/gpt-4o-mini' : this.isOrcaRouter ? 'orcarouter/auto' : 'gpt-4o-mini');
   }
 
   private get normalizedModel(): string {

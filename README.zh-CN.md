@@ -61,6 +61,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # 或使用 OrcaRouter 网关(OpenAI 兼容模型路由) https://www.orcarouter.ai
+          # USE_ORCAROUTER: true
+          # ORCAROUTER_API_KEY: ${{ secrets.ORCAROUTER_API_KEY }}
+          # MODEL: orcarouter/auto # 未设置时默认为 orcarouter/auto
           # optional
           LANGUAGE: Chinese
           # REASONING_EFFORT: low # optional; only for reasoning models (e.g. gpt-5.4, gpt-5.5), values (model support varies): none, minimal, low, medium, high, xhigh

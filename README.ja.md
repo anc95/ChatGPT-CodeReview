@@ -60,6 +60,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # または OrcaRouter ゲートウェイを使用(OpenAI 互換モデルルーター) https://www.orcarouter.ai
+          # USE_ORCAROUTER: true
+          # ORCAROUTER_API_KEY: ${{ secrets.ORCAROUTER_API_KEY }}
+          # MODEL: orcarouter/auto # 未設定時は orcarouter/auto がデフォルト
           # Optional
           LANGUAGE: Chinese
           MODEL:
