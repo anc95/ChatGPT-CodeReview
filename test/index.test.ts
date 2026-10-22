@@ -66,6 +66,8 @@ const createContext = ({
   before = 'previous-head',
   reviews = [],
   comparisons = [],
+  files = pullRequestFiles,
+  repository = 'repo',
   reviewsError,
 }: {
   action?: 'opened' | 'synchronize';
@@ -83,13 +85,16 @@ const createContext = ({
     | Error
   >;
   reviewsError?: Error;
+  files?: typeof pullRequestFiles;
+  repository?: string;
 } = {}) => {
   const compareCommits = jest.fn();
+  const createReview = jest.fn();
   const listFiles = jest.fn();
   const listReviews = jest.fn();
   const paginate = jest.fn((method) => {
     if (method === listFiles) {
-      return Promise.resolve(pullRequestFiles);
+      return Promise.resolve(files);
     }
     if (method === listReviews) {
       if (reviewsError) {
@@ -110,7 +115,7 @@ const createContext = ({
 
   return {
     context: {
-      repo: () => ({ owner: 'owner', repo: 'repo' }),
+      repo: () => ({ owner: 'owner', repo: repository }),
       pullRequest: () => ({
         owner: 'owner',
         repo: 'repo',
@@ -126,6 +131,7 @@ const createContext = ({
       octokit: {
         paginate,
         pulls: {
+          createReview,
           listFiles,
           listReviews,
         },
@@ -135,6 +141,7 @@ const createContext = ({
       },
     } as any,
     compareCommits,
+    createReview,
     listFiles,
     listReviews,
     paginate,
@@ -509,6 +516,16 @@ describe('createReviewBody', () => {
 
 describe('robot', () => {
   const githubActions = process.env.GITHUB_ACTIONS;
+  const openAiApiKey = process.env.OPENAI_API_KEY;
+  const includePatterns = process.env.INCLUDE_PATTERNS;
+
+  const restoreEnvironmentValue = (name: string, value?: string) => {
+    if (value === undefined) {
+      delete process.env[name];
+    } else {
+      process.env[name] = value;
+    }
+  };
 
   afterEach(() => {
     if (githubActions === undefined) {
@@ -516,6 +533,8 @@ describe('robot', () => {
     } else {
       process.env.GITHUB_ACTIONS = githubActions;
     }
+    restoreEnvironmentValue('OPENAI_API_KEY', openAiApiKey);
+    restoreEnvironmentValue('INCLUDE_PATTERNS', includePatterns);
     process.exitCode = undefined;
   });
 
@@ -532,6 +551,33 @@ describe('robot', () => {
     const errorHandler = app.onError.mock.calls[0][0];
     errorHandler();
     expect(process.exitCode).toBe(1);
+  });
+
+  test('does not match include patterns against the repository name', async () => {
+    process.env.OPENAI_API_KEY = 'test-key';
+      process.env.INCLUDE_PATTERNS = 'docs/**';
+      const changedFile = {
+        filename: 'src/app.ts',
+        status: 'modified',
+        contents_url:
+          'https://api.github.com/repos/example/docs/contents/src/app.ts',
+        patch: '@@ -1 +1 @@\n-old\n+new',
+      };
+      const { context, createReview } = createContext({
+        action: 'opened',
+        files: [changedFile],
+        repository: 'docs',
+      });
+      const app = {
+        on: jest.fn(),
+        onError: jest.fn(),
+      };
+
+      robot(app as any);
+      const handler = app.on.mock.calls[0][1];
+
+    await expect(handler(context)).resolves.toBe('no change');
+    expect(createReview).not.toHaveBeenCalled();
   });
 
   test('does not change process error handling outside GitHub Actions', () => {
