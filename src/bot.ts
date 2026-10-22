@@ -320,11 +320,9 @@ export const robot = (app: Probot) => {
 
       changedFiles = changedFiles?.filter(
         (file) => {
-          const url = new URL(file.contents_url)
-          const pathname = decodeURIComponent(url.pathname)
           // if includePatterns is not empty, only include files that match the pattern
           if (includePatterns.length) {
-            return matchPatterns(includePatterns, pathname)
+            return matchPatterns(includePatterns, file.filename)
           }
 
           if (ignoreList.includes(file.filename)) {
@@ -333,7 +331,7 @@ export const robot = (app: Probot) => {
 
           // if ignorePatterns is not empty, ignore files that match the pattern
           if (ignorePatterns.length) {
-            return !matchPatterns(ignorePatterns, pathname)
+            return !matchPatterns(ignorePatterns, file.filename)
           }
 
           return true
