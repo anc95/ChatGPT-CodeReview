@@ -147441,6 +147441,7 @@ class Chat {
         console.time('code-review cost');
         const prompt = this.generatePrompt(patch);
         const isReasoning = this.isReasoningModel;
+        const temperature = Number(process.env.temperature || 1);
         const res = await this.openai.chat.completions.create({
             messages: [
                 {
@@ -147450,7 +147451,7 @@ class Chat {
             ],
             model: this.model,
             ...(isReasoning ? {} : {
-                temperature: +(process.env.temperature || 0) || 1,
+                temperature: Number.isFinite(temperature) ? temperature : 1,
                 top_p: +(process.env.top_p || 0) || 1,
             }),
             max_tokens: process.env.max_tokens ? +process.env.max_tokens : undefined,

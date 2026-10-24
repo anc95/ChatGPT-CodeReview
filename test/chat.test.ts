@@ -218,6 +218,23 @@ describe("Chat", () => {
     expect(callArgs.response_format).toEqual({ type: "json_object" });
   });
 
+  test.each(["0", "0.0"])("preserves zero temperature %s", async (temperature) => {
+    process.env.MODEL = "gpt-4o";
+    process.env.temperature = temperature;
+    const chat = new Chat("test-key");
+    await chat.codeReview("@@ -1 +1 @@\n-old\n+new");
+    expect(mockCreate.mock.calls[0][0].temperature).toBe(0);
+  });
+
+  test.each([undefined, "", "invalid"])("defaults temperature %s to one", async (temperature) => {
+    process.env.MODEL = "gpt-4o";
+    if (temperature === undefined) delete process.env.temperature;
+    else process.env.temperature = temperature;
+    const chat = new Chat("test-key");
+    await chat.codeReview("@@ -1 +1 @@\n-old\n+new");
+    expect(mockCreate.mock.calls[0][0].temperature).toBe(1);
+  });
+
   test("returns empty review for empty patch", async () => {
     const chat = new Chat("test-key");
     const result = await chat.codeReview("");
